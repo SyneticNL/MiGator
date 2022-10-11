@@ -26,12 +26,12 @@ class CreateCommand extends Command
 
     public function handle(): int
     {
-        $entities = collect();
+        $models = collect();
         do {
-            $entities->push($this->handleModel(new Model($this->argument('model') ?? $this->ask('Model name'))));
+            $models->push($this->handleModel(new Model((string)($this->argument('model') ?? $this->ask('Model name')))));
         } while ($this->confirm('Would you like to work on another model?', true));
 
-        $success = app('migatorMigration')->create($entities);
+        $success = app('migatorMigration')->create($models);
         if ($success) {
             $this->info('Migration created, Get to tha choppa! ᕦ(ò_óˇ)ᕤ ');
 
