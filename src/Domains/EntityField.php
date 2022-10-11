@@ -7,7 +7,7 @@ namespace Synetic\Migator\Domains;
 class EntityField {
 
     public function __construct(
-        public string $tableName,
+        public string $fieldName,
         public EntityTypeInterface $entityType
     ) {
     }
