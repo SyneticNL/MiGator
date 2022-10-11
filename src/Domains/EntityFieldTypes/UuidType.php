@@ -10,6 +10,6 @@ class UuidType implements EntityTypeInterface
 {
     public function toMigrationString(string $column): string
     {
-        return sprintf('$table->uuid(\'%s\')', $column);
+        return sprintf('uuid(\'%s\')', $column);
     }
 }

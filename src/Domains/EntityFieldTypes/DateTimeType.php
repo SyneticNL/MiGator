@@ -10,7 +10,7 @@ class DateTimeType implements EntityTypeInterface
 {
     public function toMigrationString(string $column): string
     {
-        return sprintf('$table->dateTime(\'%s\', $precision = 0);', $column);
+        return sprintf('dateTime(\'%s\', $precision = 0);', $column);
     }
 
 }

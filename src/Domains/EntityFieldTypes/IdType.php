@@ -10,6 +10,6 @@ class IdType implements EntityTypeInterface
 {
     public function toMigrationString(string $column): string
     {
-        return sprintf('$table->id()');
+        return sprintf('id()');
     }
 }

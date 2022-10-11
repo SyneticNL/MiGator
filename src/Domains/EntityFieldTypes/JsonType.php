@@ -10,6 +10,6 @@ class JsonType implements EntityTypeInterface
 {
     public function toMigrationString(string $column): string
     {
-        return sprintf('$table->json(\'%s\')', $column);
+        return sprintf('json(\'%s\')', $column);
     }
 }

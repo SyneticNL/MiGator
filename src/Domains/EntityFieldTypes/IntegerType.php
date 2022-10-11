@@ -10,6 +10,6 @@ class IntegerType implements EntityTypeInterface
 {
     public function toMigrationString(string $column): string
     {
-        return sprintf('$table->integer(\'%s\')', $column);
+        return sprintf('integer(\'%s\')', $column);
     }
 }
