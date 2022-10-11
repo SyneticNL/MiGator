@@ -57,7 +57,7 @@ class CreateCommand extends Command
             }
 
             $fieldTypeName = $this->choice('Field types', $this->getEntityTypes()->keys()->toArray());
-            $fieldType = new ($this->getEntityTypes()->get($fieldTypeName));
+            $fieldType = new ($this->getEntityTypes()->get($fieldTypeName))();
             $entity->addEntityField(new EntityField($fieldName, $fieldType));
         } while ($this->confirm('Would you like to add another field?'));
 
