@@ -83,14 +83,14 @@ class CreateCommand extends Command
     {
         // TODO: Automatically find all the different field types
         return collect([
+            'id' => IdType::class,
+            'string' => StringType::class,
+            'integer' => IntegerType::class,
+            'date-time' => DateTimeType::class,
+            'text' => TextType::class,
             'boolean' => BooleanType::class,
             'date' => DateType::class,
-            'date-time' => DateTimeType::class,
-            'id' => IdType::class,
-            'integer' => IntegerType::class,
             'json' => JsonType::class,
-            'string' => StringType::class,
-            'text' => TextType::class,
             'uuid' => UuidType::class,
         ]);
     }

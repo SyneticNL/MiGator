@@ -11,7 +11,9 @@ class Writer
     {
         $up = $this->formatBuilderCollectionToUp($builderCollection);
         $migration = $this->createMigration($up, $builderCollection->keys());
-        $storagePath = database_path().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.$this->getMigrationName();
+        var_dump(database_path('migrations/'.$this->getMigrationName()));
+        exit();
+        $storagePath = database_path('migrations/'.$this->getMigrationName());
 
         return File::put($storagePath, $migration);
     }
@@ -21,12 +23,12 @@ class Writer
         return $builderCollection->mapWithKeys(function ($item, $key) {
             $createSchema = 'Schema::create(\''.$key.'\', static function (Blueprint $table) {';
             $fields = $item->map(static function ($item) {
-                return '$table->'.$item.';';
+                return '$table->'.$item.';'.PHP_EOL;
             })->implode(' ');
             $closeCreateSchema = '});';
 
             return collect([$createSchema.$fields.$closeCreateSchema]);
-        })->implode('/N');
+        })->implode(PHP_EOL.PHP_EOL);
     }
 
     public function createMigration(string $up, Collection $keys): string
