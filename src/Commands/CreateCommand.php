@@ -14,6 +14,7 @@ use Synetic\Migator\Domains\EntityFieldTypes\DateType;
 use Synetic\Migator\Domains\EntityFieldTypes\IdType;
 use Synetic\Migator\Domains\EntityFieldTypes\IntegerType;
 use Synetic\Migator\Domains\EntityFieldTypes\JsonType;
+use Synetic\Migator\Domains\EntityFieldTypes\StringType;
 use Synetic\Migator\Domains\EntityFieldTypes\TextType;
 use Synetic\Migator\Domains\EntityFieldTypes\UuidType;
 
@@ -81,12 +82,13 @@ class CreateCommand extends Command
         // TODO: Automatically find all the different field types
         return collect([
             'boolean' => BooleanType::class,
-            'text' => TextType::class,
-            'date-time' => DateTimeType::class,
             'date' => DateType::class,
+            'date-time' => DateTimeType::class,
+            'id' => IdType::class,
             'integer' => IntegerType::class,
             'json' => JsonType::class,
-            'id' => IdType::class,
+            'string' => StringType::class,
+            'text' => TextType::class,
             'uuid' => UuidType::class,
         ]);
     }
