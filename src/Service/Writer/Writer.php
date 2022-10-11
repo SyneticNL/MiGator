@@ -21,7 +21,7 @@ class Writer
         return $builderCollection->mapWithKeys(function ($item, $key) {
             $createSchema = 'Schema::create(\''.$key.'\', static function (Blueprint $table) {';
             $fields = $item->map(static function ($item) {
-                return '$table->'.$item.';'.PHP_EOL;
+                return '$table->'.$item.';';
             })->implode(' ');
             $closeCreateSchema = '});';
 
