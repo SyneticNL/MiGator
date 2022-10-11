@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Tests\Commands;
 
-class AboutCommandTest extends \Synetic\Migator\Tests\TestCase
+use Synetic\Migator\Tests\TestCase;
+
+class AboutCommandTest extends TestCase
 {
     public function test_it_has_the_about_signature(): void
     {
