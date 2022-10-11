@@ -27,17 +27,22 @@ class CreateCommand extends Command
 
     public function handle(): int
     {
+        $entities = collect();
         do {
-            $this->handleEntity(new Entity($this->argument('model') ?? $this->ask('Model')));
+          $entities->push($this->handleEntity(new Entity($this->argument('model') ?? $this->ask('Model'))));
         } while ($this->confirm('Would you like to work on another entity?'));
 
+        // TODO: create migrations.
         $success = (new Migration())->create($entities);
-        $this->info('Migration created');
-
-        return (int) $success;
+        if ($success) {
+          $this->info('Migration created');
+          return self::SUCCESS;
+        }
+        $this->error('Arnold wasnt able to generate your migration. Get to the choppa!');
+        return self::FAILURE;
     }
 
-    private function handleEntity(Entity $entity): void
+    private function handleEntity(Entity $entity): Entity
     {
         $existMessage = $entity->exists() ? 'Entity already exists' : 'Entity does not exist yet';
         $this->info($existMessage);
@@ -66,11 +71,10 @@ class CreateCommand extends Command
             })
         );
 
-        if ($this->confirm('Build entity?')) {
-            $entities->push($entity);
-        } else {
-            $this->warn('Cancelled entity build');
+        if (!$this->confirm('Build entity?')) {
+          $this->warn('Cancelled entity build');
         }
+        return $entity;
     }
 
     private function getEntityTypes(): Collection
