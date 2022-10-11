@@ -13,6 +13,7 @@ class Writer
         $up = $this->formatBuilderCollectionToUp($builderCollection);
         $migration = $this->createMigration($up);
         $storagePath = database_path().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.$this->getMigrationName($builderCollection->keys());
+
         return File::put($storagePath, $migration);
     }
 
@@ -21,7 +22,7 @@ class Writer
         return $builderCollection->mapWithKeys(function ($item, $key) {
             $createSchema = 'Schema::create(\''.$key.'\', static function (Blueprint $table) {';
             $fields = $item->map(static function ($item) {
-                return '$table->'.$item.';'.PHP_EOL;
+                return '$table->'.$item.';';
             })->implode(' ');
             $closeCreateSchema = '});';
 
