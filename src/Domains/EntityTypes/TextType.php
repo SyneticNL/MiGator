@@ -6,6 +6,6 @@ namespace Synetic\Migator\Domains\EntityTypes;
 
 use Synetic\Migator\Domains\EntityTypeInterface;
 
-class TextType implements EntityTypeInterface {
-
+class TextType implements EntityTypeInterface
+{
 }

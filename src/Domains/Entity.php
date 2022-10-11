@@ -6,8 +6,8 @@ namespace Synetic\Migator\Domains;
 
 use Illuminate\Support\Collection;
 
-class Entity {
-
+class Entity
+{
     public Collection $entityFields;
 
     public function __construct(
@@ -16,8 +16,8 @@ class Entity {
         $this->entityFields = collect();
     }
 
-    public function addEntityField(EntityField $entityField): void {
+    public function addEntityField(EntityField $entityField): void
+    {
         $this->entityFields->add($entityField);
     }
-
 }

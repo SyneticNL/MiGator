@@ -6,6 +6,6 @@ namespace Synetic\Migator\Domains\EntityTypes;
 
 use Synetic\Migator\Domains\EntityTypeInterface;
 
-class BooleanType implements EntityTypeInterface {
-
+class BooleanType implements EntityTypeInterface
+{
 }
