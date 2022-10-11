@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Tests\Feature\Domains;
 
-use Synetic\Migator\Domains\Entity;
+use Synetic\Migator\Domains\Model;
 use Synetic\Migator\Tests\TestCase;
 
-class EntityTest extends TestCase
+class ModelTest extends TestCase
 {
     public function providerTestCanDetect(): array
     {
@@ -23,6 +23,6 @@ class EntityTest extends TestCase
      */
     public function testCanDetect($table, $expected): void
     {
-        static::assertEquals($expected, (new Entity($table))->exists());
+        static::assertEquals($expected, (new Model($table))->exists());
     }
 }

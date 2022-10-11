@@ -6,31 +6,31 @@ namespace Synetic\Migator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Synetic\Migator\Domains\Entity;
-use Synetic\Migator\Domains\EntityField;
-use Synetic\Migator\Domains\EntityFieldTypes\BooleanType;
-use Synetic\Migator\Domains\EntityFieldTypes\DateTimeType;
-use Synetic\Migator\Domains\EntityFieldTypes\DateType;
-use Synetic\Migator\Domains\EntityFieldTypes\IdType;
-use Synetic\Migator\Domains\EntityFieldTypes\IntegerType;
-use Synetic\Migator\Domains\EntityFieldTypes\JsonType;
-use Synetic\Migator\Domains\EntityFieldTypes\StringType;
-use Synetic\Migator\Domains\EntityFieldTypes\TextType;
-use Synetic\Migator\Domains\EntityFieldTypes\UuidType;
+use Synetic\Migator\Domains\Model;
+use Synetic\Migator\Domains\Field;
+use Synetic\Migator\Domains\FieldTypes\BooleanType;
+use Synetic\Migator\Domains\FieldTypes\DateTimeType;
+use Synetic\Migator\Domains\FieldTypes\DateType;
+use Synetic\Migator\Domains\FieldTypes\IdType;
+use Synetic\Migator\Domains\FieldTypes\IntegerType;
+use Synetic\Migator\Domains\FieldTypes\JsonType;
+use Synetic\Migator\Domains\FieldTypes\StringType;
+use Synetic\Migator\Domains\FieldTypes\TextType;
+use Synetic\Migator\Domains\FieldTypes\UuidType;
 use Synetic\Migator\Service\Migration;
 
 class CreateCommand extends Command
 {
     protected $signature = 'migator:create {model? : The model your going to generate a migration for}';
 
-    protected $description = 'Create entity';
+    protected $description = 'Create migration';
 
     public function handle(): int
     {
         $entities = collect();
         do {
-            $entities->push($this->handleEntity(new Entity($this->argument('model') ?? $this->ask('Model'))));
-        } while ($this->confirm('Would you like to work on another entity?'));
+            $entities->push($this->handleModel(new Model($this->argument('model') ?? $this->ask('Model'))));
+        } while ($this->confirm('Would you like to work on another model?'));
 
         $success = (new Migration())->create($entities);
         if ($success) {
@@ -43,17 +43,17 @@ class CreateCommand extends Command
         return self::FAILURE;
     }
 
-    private function handleEntity(Entity $model): Entity
+    private function handleModel(Model $model): Model
     {
-        $existMessage = $model->exists() ? 'Entity already exists' : 'Entity does not exist yet';
+        $existMessage = $model->exists() ? 'Model already exists' : 'Model does not exist yet';
         $this->info($existMessage);
 
         $this->info('Lets configure fields for '.$model->tableName.'!');
 
         do {
-            $fieldName = $this->ask('Field name');
+            $name = $this->ask('Field name');
 
-            if ($model->columnExists($fieldName)) {
+            if ($model->columnExists($name)) {
                 $this->warn('This field already exists.');
 
                 continue;
@@ -61,19 +61,19 @@ class CreateCommand extends Command
 
             $fieldTypeName = $this->choice('Field types', $this->getFieldTypes()->keys()->toArray());
             $fieldType = new ($this->getFieldTypes()->get($fieldTypeName))();
-            $model->addEntityField(new EntityField($fieldName, $fieldType));
+            $model->addField(new Field($name, $fieldType));
         } while ($this->confirm('Would you like to add another field?'));
 
         $this->info('The following fields will be created for '.$model->tableName);
         $this->table(
             ['name', 'type'],
             $model->fields->map(function ($field) {
-                return [$field->fieldName, class_basename($field->entityType)];
+                return [$field->name, class_basename($field->type)];
             })
         );
 
-        if (! $this->confirm('Build entity?')) {
-            $this->warn('Cancelled entity build');
+        if (! $this->confirm('Build model?')) {
+            $this->warn('Cancelled build');
         }
 
         return $model;

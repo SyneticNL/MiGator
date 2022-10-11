@@ -8,10 +8,10 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
-class Entity
+class Model
 {
     /**
-     * @var Collection<EntityField>
+     * @var Collection<Field>
      */
     public Collection $fields;
 
@@ -29,9 +29,9 @@ class Entity
         $this->fields = collect();
     }
 
-    public function addEntityField(EntityField $entityField): void
+    public function addField(Field $field): void
     {
-        $this->fields->add($entityField);
+        $this->fields->add($field);
     }
 
     public function exists(): bool
@@ -42,7 +42,7 @@ class Entity
     public function columnExists($columnName): bool
     {
         if ($this->fields->filter(function ($item) use ($columnName) {
-            return $item->fieldName === $columnName;
+            return $item->name === $columnName;
         })->isNotEmpty()) {
             return true;
         }

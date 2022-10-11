@@ -9,8 +9,8 @@ use Synetic\Migator\Service\Writer\Writer;
 
 class Migration
 {
-    public function create(Collection $entityCollection): bool
+    public function create(Collection $modelCollection): bool
     {
-        return (new Writer())->write((new MigrationBuilder($entityCollection))->getBuildCollection());
+        return (new Writer())->write((new MigrationBuilder($modelCollection))->getBuildCollection());
     }
 }

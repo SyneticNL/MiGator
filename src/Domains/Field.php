@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Domains;
 
-class EntityField
+class Field
 {
     public function __construct(
-        public string $fieldName,
-        public EntityTypeInterface $entityType
+        public string $name,
+        public FieldInterface $type
     ) {
     }
 }

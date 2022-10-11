@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Synetic\Migator\Domains\EntityFieldTypes;
+namespace Synetic\Migator\Domains\FieldTypes;
 
-use Synetic\Migator\Domains\EntityTypeInterface;
+use Synetic\Migator\Domains\FieldInterface;
 
-class TextType implements EntityTypeInterface
+class TextType implements FieldInterface
 {
     public function toMigrationString(string $column): string
     {
