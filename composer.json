@@ -7,7 +7,8 @@
         "synetic",
         "laravel",
         "migator",
-        "migrations"
+        "migrations",
+        "DLF-Hackathon-2022"
     ],
     "autoload": {
         "psr-4": {
@@ -82,7 +83,7 @@
     "extra": {
         "laravel": {
             "providers": [
-              "Synetic\\Migator\\MigatorServiceProvider"
+                "Synetic\\Migator\\MigatorServiceProvider"
             ]
         }
     }
