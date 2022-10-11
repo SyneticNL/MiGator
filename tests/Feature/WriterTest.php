@@ -13,9 +13,9 @@ class WriterTest extends TestCase
 {
     private Writer $writer;
 
-    private string $testCreateString = 'Schema::create(\'tests\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});' . PHP_EOL;
+    private string $testCreateString = 'Schema::create(\'tests\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});'.PHP_EOL;
 
-    private string $testUpdateString = 'Schema::table(\'users\', static function (Blueprint $table) {$table->string(\'gps\'); $table->string(\'alter_ego\');});' . PHP_EOL;
+    private string $testUpdateString = 'Schema::table(\'users\', static function (Blueprint $table) {$table->string(\'gps\'); $table->string(\'alter_ego\');});'.PHP_EOL;
 
     protected function setUp(): void
     {
@@ -39,7 +39,7 @@ class WriterTest extends TestCase
                     'id()',
                     'string(\'name\')',
                 ]),
-            ]
+            ],
         ]);
 
         $result = $this->writer->formatBuilderCollectionToUp($build);
@@ -52,7 +52,7 @@ class WriterTest extends TestCase
     public function test_create_replace_in_template(): void
     {
         $result = $this->writer->createMigration($this->testCreateString);
-        $this->assertSame(File::get(__DIR__ . '/fixtures/WriterCreateTestsResult.txt'), $result);
+        $this->assertSame(File::get(__DIR__.'/fixtures/WriterCreateTestsResult.txt'), $result);
     }
 
     public function test_update_create_formatter(): void
@@ -64,7 +64,7 @@ class WriterTest extends TestCase
                     'string(\'gps\')',
                     'string(\'alter_ego\')',
                 ]),
-            ]
+            ],
         ]);
 
         $result = $this->writer->formatBuilderCollectionToUp($build);
@@ -90,7 +90,7 @@ class WriterTest extends TestCase
                     'string(\'b_foo\')',
                     'string(\'b_bar\')',
                 ]),
-            ]
+            ],
         ]);
 
         $result = $this->writer->formatBuilderCollectionToUp($build);
@@ -105,7 +105,7 @@ class WriterTest extends TestCase
     public function test_update_replace_in_template(): void
     {
         $result = $this->writer->createMigration($this->testUpdateString);
-        $this->assertSame(File::get(__DIR__ . '/fixtures/WriterUpdateUsersResult.txt'), $result);
+        $this->assertSame(File::get(__DIR__.'/fixtures/WriterUpdateUsersResult.txt'), $result);
     }
 
     public function test_migration_name(): void
