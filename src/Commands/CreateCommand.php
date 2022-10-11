@@ -28,7 +28,7 @@ class CreateCommand extends Command
         return self::SUCCESS;
     }
 
-    private function handleEntity(Collection $entities)
+    private function handleEntity(Collection $entities): void
     {
         $entity = new Entity(
             $this->ask('Table name')
