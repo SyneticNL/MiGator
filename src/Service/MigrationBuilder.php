@@ -24,7 +24,7 @@ class MigrationBuilder
                     'fields' => $model->fields->map(function (Field $field) {
                         return $field->type->toMigrationString($field->name);
                     }),
-                ]
+                ],
             ];
         });
     }

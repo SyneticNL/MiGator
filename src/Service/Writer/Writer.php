@@ -31,6 +31,7 @@ class Writer
             if ($item['model']->exists()) {
                 return collect([$this->formatBuilderCollectionUpdate($fields, $key)]);
             }
+
             return collect([$this->formatBuilderCollectionCreate($fields, $key)]);
         })->implode(PHP_EOL.PHP_EOL);
     }
