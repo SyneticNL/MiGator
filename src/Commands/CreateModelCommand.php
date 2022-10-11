@@ -24,11 +24,20 @@ class CreateModelCommand extends Command
 
         do {
             $fieldName = $this->ask('Field name');
-            $fieldTypeName = $this->anticipate('Field types', array_keys($this->getEntityTypes()));
-
+            $fieldTypeName = $this->choice('Field types', array_keys($this->getEntityTypes()));
             $fieldType = new ($this->getEntityTypes()[$fieldTypeName]);
             $fields->push(new EntityField($fieldName, $fieldType));
         } while ($this->confirm('Would you like to add another field?'));
+
+        $this->info('The following fields will be created for '. $modelName);
+        $this->table(
+            ['name', 'type'],
+            $fields->map(function($field) {
+                return [$field->fieldName, class_basename($field->entityType)];
+            })
+        );
+        $this->confirm('Create migration');
+        dd($fields);
 
         return self::SUCCESS;
     }
