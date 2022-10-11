@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Synetic\Migator\Service;
 
 use Illuminate\Support\Collection;
-use Synetic\Migator\Domains\Model;
 use Synetic\Migator\Domains\Field;
+use Synetic\Migator\Domains\Model;
 
 class MigrationBuilder
 {

@@ -6,7 +6,6 @@ namespace Synetic\Migator\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Synetic\Migator\Domains\Model;
 use Synetic\Migator\Domains\Field;
 use Synetic\Migator\Domains\FieldTypes\BooleanType;
 use Synetic\Migator\Domains\FieldTypes\DateTimeType;
@@ -17,6 +16,7 @@ use Synetic\Migator\Domains\FieldTypes\JsonType;
 use Synetic\Migator\Domains\FieldTypes\StringType;
 use Synetic\Migator\Domains\FieldTypes\TextType;
 use Synetic\Migator\Domains\FieldTypes\UuidType;
+use Synetic\Migator\Domains\Model;
 use Synetic\Migator\Service\Migration;
 
 class CreateCommand extends Command

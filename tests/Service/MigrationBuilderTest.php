@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Tests\Service;
 
-use Synetic\Migator\Domains\Model;
 use Synetic\Migator\Domains\Field;
 use Synetic\Migator\Domains\FieldTypes\BooleanType;
 use Synetic\Migator\Domains\FieldTypes\TextType;
+use Synetic\Migator\Domains\Model;
 use Synetic\Migator\Service\MigrationBuilder;
 use Synetic\Migator\Tests\TestCase;
 
