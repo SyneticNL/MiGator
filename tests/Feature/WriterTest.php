@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Synetic\Migator\Tests\Feature;
 
 use Illuminate\Support\Facades\File;
+use Synetic\Migator\Domains\Model;
 use Synetic\Migator\Service\Writer\Writer;
 use Synetic\Migator\Tests\TestCase;
 
@@ -12,7 +13,7 @@ class WriterTest extends TestCase
 {
     private Writer $writer;
 
-    private string $testString = 'Schema::create(\'users\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});';
+    private string $testString = 'Schema::create(\'tests\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});'.PHP_EOL;
 
     protected function setUp(): void
     {
@@ -29,10 +30,13 @@ class WriterTest extends TestCase
 
     public function test_writer_formatter(): void
     {
-        $build = collect(['users' => collect([
-            'id()',
-            'string(\'name\')',
-        ])]);
+        $build = collect(['tests' => [
+            'model' => new Model('tests'),
+            'fields' => collect([
+                'id()',
+                'string(\'name\')',
+            ])
+        ]]);
 
         $result = $this->writer->formatBuilderCollectionToUp($build);
         $this->assertSame(

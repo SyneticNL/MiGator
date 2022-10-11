@@ -21,9 +21,12 @@ class MigrationBuilderTest extends TestCase
 
         $builder = new MigrationBuilder(collect([$model]));
 
+
+        $fields = $builder->getBuildCollection()->toArray()['foos']['fields']->toArray();
+
         $this->assertEquals(
-            ['foos' => ['text(\'bar\')', 'boolean(\'baz\')']],
-            $builder->getBuildCollection()->toArray()
+            ['text(\'bar\')', 'boolean(\'baz\')'],
+            $fields
         );
     }
 }

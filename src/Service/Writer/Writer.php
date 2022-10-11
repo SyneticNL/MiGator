@@ -24,14 +24,37 @@ class Writer
     public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {
         return $builderCollection->mapWithKeys(function ($item, $key) {
-            $createSchema = 'Schema::create(\''.$key.'\', static function (Blueprint $table) {';
-            $fields = $item->map(static function ($item) {
+            $fields = $item['fields']->map(static function ($item) {
                 return '$table->'.$item.';';
             })->implode(' ');
-            $closeCreateSchema = '});';
 
-            return collect([$createSchema.$fields.$closeCreateSchema]);
+            if ($item['model']->exists()) {
+                return collect([$this->formatBuilderCollectionUpdate($fields, $key)]);
+            }
+            return collect([$this->formatBuilderCollectionCreate($fields, $key)]);
         })->implode(PHP_EOL.PHP_EOL);
+    }
+
+    public function formatBuilderCollectionUpdate($fields, $tableName): string
+    {
+        $template = File::get(__DIR__.'/../../../stubs/migator.update.stub');
+
+        return str_replace(
+            ['{{ table }}', '{{ fields }}'],
+            [$tableName, $fields],
+            $template
+        );
+    }
+
+    public function formatBuilderCollectionCreate($fields, $tableName): string
+    {
+        $template = File::get(__DIR__.'/../../../stubs/migator.create.stub');
+
+        return str_replace(
+            ['{{ table }}', '{{ fields }}'],
+            [$tableName, $fields],
+            $template
+        );
     }
 
     public function createMigration(string $up): string

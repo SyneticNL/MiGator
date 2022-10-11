@@ -19,9 +19,12 @@ class MigrationBuilder
     {
         return $this->modelCollection->mapWithKeys(function (Model $model) {
             return [
-                $model->tableName => $model->fields->map(function (Field $field) {
-                    return $field->type->toMigrationString($field->name);
-                }),
+                $model->tableName => [
+                    'model' => $model,
+                    'fields' => $model->fields->map(function (Field $field) {
+                        return $field->type->toMigrationString($field->name);
+                    }),
+                ]
             ];
         });
     }
