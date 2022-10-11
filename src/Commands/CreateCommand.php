@@ -26,7 +26,7 @@ class CreateCommand extends Command
                 $this->ask('Table name')
             );
 
-            $this->info('Lets make '. $entity->tableName .'!');
+            $this->info('Lets make '.$entity->tableName.'!');
 
             do {
                 $fieldName = $this->ask('Field name');
@@ -35,10 +35,10 @@ class CreateCommand extends Command
                 $entity->addEntityField(new EntityField($fieldName, $fieldType));
             } while ($this->confirm('Would you like to add another field?'));
 
-            $this->info('The following fields will be created for '. $entity->tableName);
+            $this->info('The following fields will be created for '.$entity->tableName);
             $this->table(
                 ['name', 'type'],
-                $entity->entityFields->map(function($field) {
+                $entity->entityFields->map(function ($field) {
                     return [$field->fieldName, class_basename($field->entityType)];
                 })
             );
@@ -47,7 +47,6 @@ class CreateCommand extends Command
             } else {
                 $this->warn('Cancelled entity creations');
             }
-
         } while ($this->confirm('Would you like to create another entity?'));
 
         return self::SUCCESS;
@@ -58,8 +57,7 @@ class CreateCommand extends Command
         // TODO: Automatically find all the different field types
         return collect([
             'boolean' => BooleanType::class,
-            'text' => TextType::class
+            'text' => TextType::class,
         ]);
     }
-
 }
