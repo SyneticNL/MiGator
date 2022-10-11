@@ -26,10 +26,10 @@ class Model
     ) {
         $this->tableName = Str::camel(Str::plural($model));
         $this->tableExists = Schema::hasTable($this->tableName);
-        $this->fields = collect();
+        $this->fields = collect([]);
     }
 
-    public function addField(Field $field)
+    public function addField(Field $field): void
     {
         $this->fields->add($field);
     }
@@ -39,7 +39,7 @@ class Model
         return $this->tableExists;
     }
 
-    public function columnExists($columnName): bool
+    public function columnExists(string $columnName): bool
     {
         if ($this->fields->filter(function ($item) use ($columnName) {
             return $item->name === $columnName;

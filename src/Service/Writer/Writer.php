@@ -35,7 +35,7 @@ class Writer
         })->implode(PHP_EOL.PHP_EOL);
     }
 
-    public function formatBuilderCollectionUpdate($fields, $tableName): string
+    public function formatBuilderCollectionUpdate(string $fields, string $tableName): string
     {
         $template = File::get(__DIR__.'/../../../stubs/migator.update.stub');
 
@@ -46,7 +46,7 @@ class Writer
         );
     }
 
-    public function formatBuilderCollectionCreate($fields, $tableName): string
+    public function formatBuilderCollectionCreate(string $fields, string $tableName): string
     {
         $template = File::get(__DIR__.'/../../../stubs/migator.create.stub');
 
