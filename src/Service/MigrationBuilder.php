@@ -21,7 +21,7 @@ class MigrationBuilder
             return [
                 $entity->tableName => $entity->entityFields->map(function (EntityField $entityField) {
                     return $entityField->entityType->toMigrationString($entityField->fieldName);
-                })
+                }),
             ];
         });
     }
