@@ -21,24 +21,24 @@ use Synetic\Migator\Service\Migration;
 
 class CreateCommand extends Command
 {
-    protected $signature = 'migator:create {model? : The model your going to generate a migration for}';
+    protected $signature = 'migator:create {model? : The model you\'re going to generate a migration for.}';
 
-    protected $description = 'Create migration';
+    protected $description = 'Create a migration.';
 
     public function handle(): int
     {
         $entities = collect();
         do {
-            $entities->push($this->handleModel(new Model($this->argument('model') ?? $this->ask('Model'))));
+            $entities->push($this->handleModel(new Model($this->argument('model') ?? $this->ask('Model name'))));
         } while ($this->confirm('Would you like to work on another model?', true));
 
         $success = (new Migration())->create($entities);
         if ($success) {
-            $this->info('Migration created');
+            $this->info('Migration created, you are going to live.');
 
             return self::SUCCESS;
         }
-        $this->error('Arnold wasnt able to generate your migration. Get to the choppa!');
+        $this->error('Arnold wasn\'t able to generate your migration. Get to tha choppa!');
 
         return self::FAILURE;
     }
@@ -48,7 +48,7 @@ class CreateCommand extends Command
         $existMessage = $model->exists() ? 'Model already exists' : 'Model does not exist yet';
         $this->info($existMessage);
 
-        $this->info('Lets configure fields for '.$model->tableName.'!');
+        $this->info('Let\'s configure fields for '.$model->tableName.'!');
 
         do {
             $name = $this->ask('Field name');
@@ -64,7 +64,7 @@ class CreateCommand extends Command
             $model->addField(new Field($name, $fieldType));
         } while ($this->confirm('Would you like to add another field?', true));
 
-        $this->info('The following fields will be created for '.$model->tableName);
+        $this->info('The following fields will be created for '.$model->tableName.':');
         $this->table(
             ['name', 'type'],
             $model->fields->map(function ($field) {
@@ -72,7 +72,7 @@ class CreateCommand extends Command
             })
         );
 
-        if (! $this->confirm('Build model?', true)) {
+        if (! $this->confirm('Do you want to build the model ['.$model->tableName.']?', true)) {
             $this->warn('Cancelled build');
         }
 
@@ -81,7 +81,7 @@ class CreateCommand extends Command
 
     private function getFieldTypes(): Collection
     {
-        // TODO: Automatically find all the different field types
+        // TODO: Automatically discover all different field types
         return collect([
             'id' => IdType::class,
             'string' => StringType::class,
