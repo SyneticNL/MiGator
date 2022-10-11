@@ -5,31 +5,34 @@ namespace Synetic\Migator\Service\Writer;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 
-class Writer {
-
+class Writer
+{
     public function write(Collection $builderCollection): bool
     {
         $up = $this->formatBuilderCollectionToUp($builderCollection);
         $migration = $this->createMigration($up, $builderCollection->keys());
-        $storagePath = database_path() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR . $this->getMigrationName();
+        $storagePath = database_path().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.$this->getMigrationName();
+
         return File::put($storagePath, $migration);
     }
 
     public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {
         return $builderCollection->mapWithKeys(function ($item, $key) {
-            $createSchema = 'Schema::create(\''. $key . '\', static function (Blueprint $table) {';
+            $createSchema = 'Schema::create(\''.$key.'\', static function (Blueprint $table) {';
             $fields = $item->map(static function ($item) {
-                return '$table->'. $item . ';';
+                return '$table->'.$item.';';
             })->implode(' ');
             $closeCreateSchema = '});';
-            return collect([$createSchema . $fields . $closeCreateSchema]);
+
+            return collect([$createSchema.$fields.$closeCreateSchema]);
         })->implode('/N');
     }
 
     public function createMigration(string $up, Collection $keys): string
     {
-        $template = File::get(__DIR__ . '/Template/Migator.template');
+        $template = File::get(__DIR__.'/Template/Migator.template');
+
         return str_replace(
             ['$name', '$up'],
             [$keys->implode('_'), $up],
@@ -41,7 +44,4 @@ class Writer {
     {
         return 'migration.php';
     }
-
-
-
 }
