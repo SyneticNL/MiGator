@@ -33,7 +33,7 @@ It will then ask for writing this into a migration file.
 This package can be installed using composer:
 
 ```bash
-composer require synetic/migator --dev
+composer require wearesynetic/laravel-migator --dev
 ```
 
 ## Usage
