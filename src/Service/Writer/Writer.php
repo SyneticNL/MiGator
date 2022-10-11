@@ -68,8 +68,8 @@ class Writer
         );
     }
 
-    public function getMigrationName(Collection $entityKeys): string
+    public function getMigrationName(Collection $models): string
     {
-        return date('Y_m_d_His').'_create_'.$entityKeys->implode('_').'_migration.php';
+        return date('Y_m_d_His').'_create_'.$models->implode('_').'_migration.php';
     }
 }
