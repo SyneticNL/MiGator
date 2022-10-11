@@ -34,12 +34,17 @@ class Entity
 
     public function columnExists($columnName): bool
     {
-//        if (array_key_exists($columnName, $this->columns)) {
-//            return $this->columns[$columnName];
-//        }
-//
-//        $this->columns[$columnName] = Schema::hasColumn($this->tableName, $columnName);
-//        return $this->columns[$columnName];
-        return false;
+        if ($this->entityFields->filter(function ($item) use ($columnName) {
+            return $item->fieldName === $columnName;
+        })->isNotEmpty()) {
+            return true;
+        }
+
+        if (array_key_exists($columnName, $this->columns)) {
+            return $this->columns[$columnName];
+        }
+
+        $this->columns[$columnName] = false; //Schema::hasColumn($this->tableName, $columnName);
+        return $this->columns[$columnName];
     }
 }
