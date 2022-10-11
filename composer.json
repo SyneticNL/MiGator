@@ -82,7 +82,7 @@
     "extra": {
         "laravel": {
             "providers": [
-              "Synetic\\Migator\\MigatorServiceProvider"
+                "Synetic\\Migator\\MigatorServiceProvider"
             ]
         }
     }
