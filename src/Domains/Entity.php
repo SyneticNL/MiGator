@@ -45,6 +45,7 @@ class Entity
         }
 
         $this->columns[$columnName] = false; //Schema::hasColumn($this->tableName, $columnName);
+
         return $this->columns[$columnName];
     }
 }
