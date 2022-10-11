@@ -11,11 +11,11 @@ use Synetic\Migator\Domains\EntityField;
 use Synetic\Migator\Domains\EntityTypes\BooleanType;
 use Synetic\Migator\Domains\EntityTypes\TextType;
 
-class CreateModelCommand extends Command
+class CreateCommand extends Command
 {
-    protected $signature = 'migator:create-model';
+    protected $signature = 'migator:create';
 
-    protected $description = 'Create model';
+    protected $description = 'Create entity';
 
     public function handle(): int
     {

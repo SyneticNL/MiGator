@@ -7,7 +7,7 @@ namespace Synetic\Migator;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Synetic\Migator\Commands\AboutCommand;
-use Synetic\Migator\Commands\CreateModelCommand;
+use Synetic\Migator\Commands\CreateCommand;
 
 class MigatorServiceProvider extends PackageServiceProvider
 {
@@ -17,7 +17,7 @@ class MigatorServiceProvider extends PackageServiceProvider
             ->name('Migator')
             ->hasCommands(
                 AboutCommand::class,
-                CreateModelCommand::class,
+                CreateCommand::class,
             );
     }
 }
