@@ -9,12 +9,11 @@ use Synetic\Migator\Tests\TestCase;
 
 class EntityTest extends TestCase
 {
-
     public function providerTestCanDetect(): array
     {
         return [
-            'can detect existing table' => ['users', true,],
-            'can detect not existing table' => ['test', false,],
+            'can detect existing table' => ['users', true],
+            'can detect not existing table' => ['test', false],
         ];
     }
 
