@@ -28,7 +28,7 @@ class Writer
             $closeCreateSchema = '});';
 
             return collect([$createSchema.$fields.$closeCreateSchema]);
-        })->implode('/N');
+        })->implode(PHP_EOL.PHP_EOL);
     }
 
     public function createMigration(string $up, Collection $keys): string
