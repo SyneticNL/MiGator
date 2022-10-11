@@ -6,7 +6,7 @@ namespace Synetic\Migator\Domains\EntityFieldTypes;
 
 use Synetic\Migator\Domains\EntityTypeInterface;
 
-class DateTypeTime implements EntityTypeInterface
+class DateTimeType implements EntityTypeInterface
 {
     public function toMigrationString(): string
     {
