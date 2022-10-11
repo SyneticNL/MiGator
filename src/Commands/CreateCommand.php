@@ -26,7 +26,7 @@ class CreateCommand extends Command
 
     public function handle(): int
     {
-        $models = collect();
+        $models = new Collection();
         do {
             $models->push($this->handleModel(new Model((string) ($this->argument('model') ?? $this->ask('Model name')))));
         } while ($this->confirm('Would you like to work on another model?', true));
@@ -81,7 +81,7 @@ class CreateCommand extends Command
     private function getFieldTypes(): Collection
     {
         // TODO: Automatically discover all different field types
-        return collect([
+        return new Collection([
             'id' => IdType::class,
             'string' => StringType::class,
             'integer' => IntegerType::class,
