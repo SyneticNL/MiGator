@@ -16,8 +16,8 @@ use Synetic\Migator\Domains\EntityFieldTypes\IntegerType;
 use Synetic\Migator\Domains\EntityFieldTypes\JsonType;
 use Synetic\Migator\Domains\EntityFieldTypes\StringType;
 use Synetic\Migator\Domains\EntityFieldTypes\TextType;
-use Synetic\Migator\Service\Migration;
 use Synetic\Migator\Domains\EntityFieldTypes\UuidType;
+use Synetic\Migator\Service\Migration;
 
 class CreateCommand extends Command
 {
@@ -33,6 +33,7 @@ class CreateCommand extends Command
 
         $success = (new Migration())->create($entities);
         $this->info('Migration created');
+
         return (int) $success;
     }
 
