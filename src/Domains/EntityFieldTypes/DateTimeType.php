@@ -12,5 +12,4 @@ class DateTimeType implements EntityTypeInterface
     {
         return sprintf('dateTime(\'%s\', $precision = 0);', $column);
     }
-
 }
