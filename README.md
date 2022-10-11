@@ -13,3 +13,9 @@ composer require synetic/migator --dev
 ## Usage
 
 `php artisan make:migator`
+
+This will start the migator process.
+
+## Roadmap
+
+TBD
