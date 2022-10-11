@@ -21,32 +21,32 @@
     },
     "authors": [
         {
-            "name": "Jeffrey Bertoen",
-            "email": "jeffrey@synetic.nl"
-        },
-        {
-            "name": "Tom van Etten",
-            "email": "tom.vanetten@synetic.nl"
-        },
-        {
-            "name": "Aubrey Hewes",
-            "email": "aubrey.hewes@synetic.nl"
+            "name": "Misha van Tol",
+            "email": "misha.vantol@synetic.nl"
         },
         {
             "name": "Sander Jonk",
             "email": "sander.jonk@synetic.nl"
         },
         {
+            "name": "Aubrey Hewes",
+            "email": "aubrey.hewes@synetic.nl"
+        },
+        {
+            "name": "Jeffrey Bertoen",
+            "email": "jeffrey@synetic.nl"
+        },
+        {
             "name": "Robin Speekenbrink",
             "email": "robin.speekenbrink@synetic.nl"
         },
         {
-            "name": "Misha van Tol",
-            "email": "misha.vantol@synetic.nl"
-        },
-        {
             "name": "Jordy Vleugel",
             "email": "jordy@synetic.nl"
+        },
+        {
+            "name": "Tom van Etten",
+            "email": "tom.vanetten@synetic.nl"
         }
     ],
     "require": {
@@ -54,7 +54,6 @@
         "spatie/laravel-package-tools": "^1.13"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.11",
         "laravel/pint": "^1.2",
         "nunomaduro/collision": "^6.0",
         "nunomaduro/larastan": "^2.0.1",
