@@ -55,6 +55,7 @@ class CreateCommand extends Command
 
             if ($model->columnExists($name)) {
                 $this->warn('This field already exists.');
+
                 continue;
             }
 
