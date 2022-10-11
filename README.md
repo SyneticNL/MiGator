@@ -9,7 +9,7 @@ A package that will allow developers to interactively generate schema migrations
 
 This package will ask the developer interactively for the following:
 
-- [ ] model
+- [x] model
 - [x] table (default: derived from laravel model naming convention)
 - [x] fields (repeatedly)
     - [x] name 
@@ -18,13 +18,13 @@ This package will ask the developer interactively for the following:
         - [x] text
         - [x] date
         - [x] datetime
-        - [ ] json
-        - [ ] id
+        - [x] json
+        - [x] id
         - [x] integer
-    - [ ] default value
-    - [ ] index
-    - [ ] foreignkeys
-- [ ] relations to other entities
+    - [-] default value ((#11)[https://github.com/SyneticNL/MiGator/issues/11])
+    - [-] index ((#12)[https://github.com/SyneticNL/MiGator/issues/12])
+    - [-] foreign keys ((#13)[])
+- [-] relations to other entities ((#9)[])
 
 It will then ask for writing this into a migration file.
 
@@ -44,9 +44,9 @@ This will start the migator process.
 
 ## Roadmap
 
-- [ ] Derive table name default from the given model
-- [ ] Implement validation of preexisting columns / definitions
-- [ ] Implement CLI usage for 'model'-specific use case (#5)
-- [ ] Implement CLI usage for 'other' use case (#6)
-- [ ] Implement relation mapping / autocomplete
-- [ ] Optionally specify the stub to be used for the migration
+- [x] Derive table name default from the given model
+- [x] Implement validation of preexisting columns / definitions
+- [x] Implement CLI usage for 'model'-specific use case ((#5)[https://github.com/SyneticNL/MiGator/issues/5])
+- [-] Implement CLI usage for 'other' use case ((#6)[https://github.com/SyneticNL/MiGator/issues/6])
+- [-] Implement relation mapping / autocomplete ((#9)[https://github.com/SyneticNL/MiGator/issues/9])
+- [-] Optionally specify the stub to be used for the migration ((#10)[https://github.com/SyneticNL/MiGator/issues/10])

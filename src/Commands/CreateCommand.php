@@ -23,7 +23,7 @@ class CreateCommand extends Command
 {
     protected $signature = 'migator:create {model? : The model you\'re going to generate a migration for.}';
 
-    protected $description = 'Create migration';
+    protected $description = 'Create a migration.';
 
     public function handle(): int
     {
