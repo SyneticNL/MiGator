@@ -43,6 +43,6 @@ class Writer
 
     public function getMigrationName(Collection $entityKeys): string
     {
-        return  Date::create()->format('Y_m_d_h_i_s').$entityKeys->implode('_').'migration.php';
+        return  Date::create()->format('Y_m_d_His').$entityKeys->implode('_').'migration.php';
     }
 }
