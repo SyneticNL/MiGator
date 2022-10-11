@@ -14,6 +14,7 @@ class WriterTest extends TestCase
     private Writer $writer;
 
     private string $testCreateString = 'Schema::create(\'tests\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});'.PHP_EOL;
+
     private string $testUpdateString = 'Schema::table(\'users\', static function (Blueprint $table) {$table->string(\'gps\'); $table->string(\'alter_ego\');});'.PHP_EOL;
 
     protected function setUp(): void
@@ -58,7 +59,7 @@ class WriterTest extends TestCase
             'fields' => collect([
                 'string(\'gps\')',
                 'string(\'alter_ego\')',
-            ])
+            ]),
         ]]);
 
         $result = $this->writer->formatBuilderCollectionToUp($build);
