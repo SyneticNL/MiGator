@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Synetic\Migator\Service\Writer;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\File;
 
 class Writer
@@ -29,10 +28,10 @@ class Writer
             })->implode(' ');
 
             if ($item['model']->exists()) {
-                return collect([$this->formatBuilderCollectionUpdate($fields, $key)]);
+                return [$key => $this->formatBuilderCollectionUpdate($fields, $key)];
             }
 
-            return collect([$this->formatBuilderCollectionCreate($fields, $key)]);
+            return [$key => $this->formatBuilderCollectionCreate($fields, $key)];
         })->implode(PHP_EOL.PHP_EOL);
     }
 
@@ -71,6 +70,6 @@ class Writer
 
     public function getMigrationName(Collection $entityKeys): string
     {
-        return Date::now()->format('Y_m_d_His').'_create_'.$entityKeys->implode('_').'_migration.php';
+        return date('Y_m_d_His').'_create_'.$entityKeys->implode('_').'_migration.php';
     }
 }

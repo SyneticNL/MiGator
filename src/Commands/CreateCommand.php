@@ -34,11 +34,11 @@ class CreateCommand extends Command
 
         $success = (new Migration())->create($entities);
         if ($success) {
-            $this->info('Migration created, you are going to live.');
+            $this->info('Migration created, Get to tha choppa! ᕦ(ò_óˇ)ᕤ ');
 
             return self::SUCCESS;
         }
-        $this->error('Arnold wasn\'t able to generate your migration. Get to tha choppa!');
+        $this->error('Arnold wasn\'t able to generate your migration. I\'ll be back.');
 
         return self::FAILURE;
     }
