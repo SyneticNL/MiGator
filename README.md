@@ -18,6 +18,7 @@ This package will ask the developer interactively for the following:
         - [x] integer
     - [ ] default value
     - [ ] index
+    - [ ] foreignkeys
 - [ ] relations to other entities
 
 It will then ask for writing this into a migration file.
@@ -40,6 +41,7 @@ This will start the migator process.
 
 - [ ] Derive table name default from the given model
 - [ ] Implement validation of preexisting columns / definitions
-- [ ] Implement CLI usage for 'model'-specific use case
-- [ ] Implement CLI usage for 'other' use case
+- [ ] Implement CLI usage for 'model'-specific use case (#5)
+- [ ] Implement CLI usage for 'other' use case (#6)
 - [ ] Implement relation mapping / autocomplete
+- [ ] Optionally specify the stub to be used for the migration
