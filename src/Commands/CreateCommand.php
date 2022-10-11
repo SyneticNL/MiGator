@@ -30,7 +30,7 @@ class CreateCommand extends Command
         $entities = collect();
         do {
             $entities->push($this->handleModel(new Model($this->argument('model') ?? $this->ask('Model name'))));
-        } while ($this->confirm('Would you like to work on another model?'));
+        } while ($this->confirm('Would you like to work on another model?', true));
 
         $success = (new Migration())->create($entities);
         if ($success) {
@@ -62,7 +62,7 @@ class CreateCommand extends Command
             $fieldTypeName = $this->choice('Field types', $this->getFieldTypes()->keys()->toArray());
             $fieldType = new ($this->getFieldTypes()->get($fieldTypeName))();
             $model->addField(new Field($name, $fieldType));
-        } while ($this->confirm('Would you like to add another field?'));
+        } while ($this->confirm('Would you like to add another field?', true));
 
         $this->info('The following fields will be created for '.$model->tableName.':');
         $this->table(
@@ -72,7 +72,7 @@ class CreateCommand extends Command
             })
         );
 
-        if (! $this->confirm('Do you want to build the model ['.$model->tableName.']?')) {
+        if (! $this->confirm('Do you want to build the model ['.$model->tableName.']?', true)) {
             $this->warn('Cancelled build');
         }
 

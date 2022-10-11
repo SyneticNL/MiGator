@@ -36,7 +36,7 @@ class WriterTest extends TestCase
             'fields' => collect([
                 'id()',
                 'string(\'name\')',
-            ])
+            ]),
         ]]);
 
         $result = $this->writer->formatBuilderCollectionToUp($build);

@@ -29,9 +29,10 @@ class Writer
             })->implode(' ');
 
             if ($item['model']->exists()) {
-                return collect([$this->formatBuilderCollectionUpdate($fields, $key)]);
+                return [$key => $this->formatBuilderCollectionUpdate($fields, $key)];
             }
-            return collect([$this->formatBuilderCollectionCreate($fields, $key)]);
+
+            return [$key => $this->formatBuilderCollectionCreate($fields, $key)];
         })->implode(PHP_EOL.PHP_EOL);
     }
 
