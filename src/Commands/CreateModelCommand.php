@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Synetic\Migator\Commands;
 
 use Illuminate\Console\Command;
+use Synetic\Migator\Domains\Entity;
 use Synetic\Migator\Domains\EntityField;
 use Synetic\Migator\Domains\EntityTypes\BooleanType;
 use Synetic\Migator\Domains\EntityTypes\TextType;
@@ -17,27 +18,36 @@ class CreateModelCommand extends Command
 
     public function handle(): int
     {
-        $modelName = $this->ask('Model name');
-        $this->info('Lets make '. $modelName .'!');
-
-        $fields = collect();
+        $entities = collect();
 
         do {
-            $fieldName = $this->ask('Field name');
-            $fieldTypeName = $this->choice('Field types', array_keys($this->getEntityTypes()));
-            $fieldType = new ($this->getEntityTypes()[$fieldTypeName]);
-            $fields->push(new EntityField($fieldName, $fieldType));
-        } while ($this->confirm('Would you like to add another field?'));
+            $entity = new Entity(
+                $this->ask('Table name')
+            );
 
-        $this->info('The following fields will be created for '. $modelName);
-        $this->table(
-            ['name', 'type'],
-            $fields->map(function($field) {
-                return [$field->fieldName, class_basename($field->entityType)];
-            })
-        );
-        $this->confirm('Create migration');
-        dd($fields);
+            $this->info('Lets make '. $entity->tableName .'!');
+
+            do {
+                $fieldName = $this->ask('Field name');
+                $fieldTypeName = $this->choice('Field types', array_keys($this->getEntityTypes()));
+                $fieldType = new ($this->getEntityTypes()[$fieldTypeName]);
+                $entity->addEntityField(new EntityField($fieldName, $fieldType));
+            } while ($this->confirm('Would you like to add another field?'));
+
+            $this->info('The following fields will be created for '. $entity->tableName);
+            $this->table(
+                ['name', 'type'],
+                $entity->entityFields->map(function($field) {
+                    return [$field->fieldName, class_basename($field->entityType)];
+                })
+            );
+            if ($this->confirm('Create entity')) {
+                $entities->push($entity);
+            } else {
+                $this->warn('Cancelled entity creations');
+            }
+
+        } while ($this->confirm('Would you like to create another entity?'));
 
         return self::SUCCESS;
     }
