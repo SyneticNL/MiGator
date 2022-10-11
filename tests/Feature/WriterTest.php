@@ -48,6 +48,6 @@ class WriterTest extends TestCase
 
     public function test_migration_name(): void
     {
-        $this->assertSame('migration.php', $this->writer->getMigrationName());
+        $this->assertContains('user_name_migration.php', $this->writer->getMigrationName(collect(['user', 'name'])));
     }
 }
