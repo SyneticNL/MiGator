@@ -26,10 +26,19 @@ class CreateCommand extends Command
                 $this->ask('Table name')
             );
 
-            $this->info('Lets make '.$entity->tableName.'!');
+            $existMessage = $entity->exists() ? 'Entity already exists' : 'Entity does not exist yet';
+            $this->info($existMessage);
+
+            $this->info('Lets configure fields for '.$entity->tableName.'!');
 
             do {
                 $fieldName = $this->ask('Field name');
+
+                if ($entity->columnExists($fieldName)) {
+                    $this->warn('This field already exists.');
+                    continue;
+                }
+
                 $fieldTypeName = $this->choice('Field types', $this->getEntityTypes()->keys()->toArray());
                 $fieldType = new ($this->getEntityTypes()->get($fieldTypeName));
                 $entity->addEntityField(new EntityField($fieldName, $fieldType));
