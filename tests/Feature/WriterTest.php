@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Synetic\Migator\Tests\Commands;
+namespace Synetic\Migator\Tests\Feature;
 
 use Illuminate\Support\Facades\File;
 use Synetic\Migator\Service\Writer\Writer;
