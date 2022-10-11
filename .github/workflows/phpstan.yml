@@ -1,7 +1,7 @@
-name: Unit tests (phpunit)
+name: PhpStan
 on: [push]
 jobs:
-  phpunit:
+  phpstan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -10,4 +10,5 @@ jobs:
       - uses: php-actions/composer@v6
       - uses: php-actions/phpstan@v3
         with:
+          memory_limit: 1024M
           path: src/
