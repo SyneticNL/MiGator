@@ -8,6 +8,7 @@ use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Synetic\Migator\Commands\AboutCommand;
 use Synetic\Migator\Commands\CreateCommand;
+use Synetic\Migator\Service\Migration;
 
 class MigatorServiceProvider extends PackageServiceProvider
 {
@@ -20,4 +21,14 @@ class MigatorServiceProvider extends PackageServiceProvider
                 CreateCommand::class,
             );
     }
+
+    public function register()
+    {
+        parent::register();
+        $this->app->bind('migatorMigration', function($app) {
+            return new Migration();
+        });
+    }
+
+
 }
