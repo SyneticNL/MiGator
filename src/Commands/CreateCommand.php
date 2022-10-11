@@ -21,16 +21,14 @@ use Synetic\Migator\Domains\EntityFieldTypes\UuidType;
 
 class CreateCommand extends Command
 {
-    protected $signature = 'migator:create';
+    protected $signature = 'migator:create {model? : The model your going to generate a migration for}';
 
     protected $description = 'Create entity';
 
     public function handle(): int
     {
-        $entities = collect();
-
         do {
-            $this->handleEntity($entities);
+            $this->handleEntity(new Entity($this->argument('model') ?? $this->ask('Model')));
         } while ($this->confirm('Would you like to work on another entity?'));
 
         $success = (new Migration())->create($entities);
@@ -38,12 +36,8 @@ class CreateCommand extends Command
         return (int) $success;
     }
 
-    private function handleEntity(Collection $entities): void
+    private function handleEntity(Entity $entity): void
     {
-        $entity = new Entity(
-            $this->ask('Table name')
-        );
-
         $existMessage = $entity->exists() ? 'Entity already exists' : 'Entity does not exist yet';
         $this->info($existMessage);
 

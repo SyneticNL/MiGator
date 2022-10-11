@@ -22,7 +22,7 @@ class MigrationBuilderTest extends TestCase
         $builder = new MigrationBuilder(collect([$entity]));
 
         $this->assertEquals(
-            ['foo' => ['string(\'bar\')', 'boolean(\'baz\')']],
+            ['foos' => ['text(\'bar\')', 'boolean(\'baz\')']],
             $builder->getBuildCollection()->toArray()
         );
     }

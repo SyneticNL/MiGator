@@ -31,11 +31,11 @@ class Writer
 
     public function createMigration(string $up, Collection $keys): string
     {
-        $template = File::get(__DIR__.'/Template/Migator.template');
+        $template = File::get(__DIR__.'/../../../stubs/MigatorTemplate.stub');
 
         return str_replace(
-            ['$name', '$up'],
-            [$keys->implode('_'), $up],
+            ['{{ up }}'],
+            [$up],
             $template
         );
     }
