@@ -10,6 +10,6 @@ class BooleanType implements EntityTypeInterface
 {
     public function toMigrationString(string $column): string
     {
-        return sprintf('$table->boolean(\'%s\')', $column);
+        return sprintf('boolean(\'%s\')', $column);
     }
 }

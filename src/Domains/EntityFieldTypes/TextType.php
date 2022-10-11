@@ -10,6 +10,6 @@ class TextType implements EntityTypeInterface
 {
     public function toMigrationString(string $column): string
     {
-        return sprintf('$table->string(\'%s\')', $column);
+        return sprintf('string(\'%s\')', $column);
     }
 }
