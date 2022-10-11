@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Commands;
 
+use Carbon\Doctrine\DateTimeType;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Synetic\Migator\Domains\Entity;
 use Synetic\Migator\Domains\EntityField;
 use Synetic\Migator\Domains\EntityFieldTypes\BooleanType;
+use Synetic\Migator\Domains\EntityFieldTypes\DateType;
+use Synetic\Migator\Domains\EntityFieldTypes\IntegerType;
 use Synetic\Migator\Domains\EntityFieldTypes\TextType;
 
 class CreateCommand extends Command
@@ -73,6 +76,9 @@ class CreateCommand extends Command
         return collect([
             'boolean' => BooleanType::class,
             'text' => TextType::class,
+            'date-time' => DateTimeType::class,
+            'date' => DateType::class,
+            'integer' => IntegerType::class,
         ]);
     }
 }
