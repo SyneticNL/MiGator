@@ -3,27 +3,45 @@
 namespace Synetic\Migator\Service\Writer;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\File;
 
-class Writer implements WriterInterface
+class Writer
 {
-    //['users' => ['id()', 'string(\'name\')']]
     public function write(Collection $builderCollection): bool
     {
-        $createSchemaCollection = $this->formatBuilderCollectionToCreateSchemaCollection($builderCollection);
+        $up = $this->formatBuilderCollectionToUp($builderCollection);
+        $migration = $this->createMigration($up, $builderCollection->keys());
+        $storagePath = database_path().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.$this->getMigrationName();
 
-        return false;
+        return File::put($storagePath, $migration);
     }
 
-    public function formatBuilderCollectionToCreateSchemaCollection(Collection $builderCollection): string
+    public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {
-        return $builderCollection->mapWithKeys(static function ($item, $key) {
-            $createSchema = 'Schema::create('.$key.', static function (Blueprint $table) {';
-            $fields = $item->map((static function ($item) {
+        return $builderCollection->mapWithKeys(function ($item, $key) {
+            $createSchema = 'Schema::create(\''.$key.'\', static function (Blueprint $table) {';
+            $fields = $item->map(static function ($item) {
                 return '$table->'.$item.';';
-            }));
+            })->implode(' ');
             $closeCreateSchema = '});';
 
-            return $createSchema.$fields.$closeCreateSchema;
-        })->implode('\N');
+            return collect([$createSchema.$fields.$closeCreateSchema]);
+        })->implode('/N');
+    }
+
+    public function createMigration(string $up, Collection $keys): string
+    {
+        $template = File::get(__DIR__.'/Template/Migator.template');
+
+        return str_replace(
+            ['$name', '$up'],
+            [$keys->implode('_'), $up],
+            $template
+        );
+    }
+
+    public function getMigrationName(): string
+    {
+        return 'migration.php';
     }
 }
