@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Synetic\Migator\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 use Synetic\Migator\Domains\Entity;
 use Synetic\Migator\Domains\EntityField;
 use Synetic\Migator\Domains\EntityTypes\BooleanType;
@@ -29,8 +30,8 @@ class CreateModelCommand extends Command
 
             do {
                 $fieldName = $this->ask('Field name');
-                $fieldTypeName = $this->choice('Field types', array_keys($this->getEntityTypes()));
-                $fieldType = new ($this->getEntityTypes()[$fieldTypeName]);
+                $fieldTypeName = $this->choice('Field types', $this->getEntityTypes()->keys()->toArray());
+                $fieldType = new ($this->getEntityTypes()->get($fieldTypeName));
                 $entity->addEntityField(new EntityField($fieldName, $fieldType));
             } while ($this->confirm('Would you like to add another field?'));
 
@@ -52,13 +53,13 @@ class CreateModelCommand extends Command
         return self::SUCCESS;
     }
 
-    private function getEntityTypes(): array
+    private function getEntityTypes(): Collection
     {
         // TODO: Automatically find all the different field types
-        return [
+        return collect([
             'boolean' => BooleanType::class,
             'text' => TextType::class
-        ];
+        ]);
     }
 
 }
