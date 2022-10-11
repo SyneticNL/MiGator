@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Synetic\Migator\Service\Writer;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\File;
 
 class Writer
