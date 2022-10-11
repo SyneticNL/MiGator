@@ -13,6 +13,7 @@ class Writer
         $up = $this->formatBuilderCollectionToUp($builderCollection);
         $migration = $this->createMigration($up);
         $storagePath = database_path().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.$this->getMigrationName($builderCollection->keys());
+
         return File::put($storagePath, $migration);
     }
 
