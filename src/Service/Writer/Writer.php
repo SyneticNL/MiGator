@@ -32,7 +32,7 @@ class Writer
 
     public function createMigration(string $up): string
     {
-        $template = File::get(__DIR__.'/../../../stubs/MigatorTemplate.stub');
+        $template = File::get(__DIR__.'/../../../stubs/migator.stub');
 
         return str_replace(
             ['{{ up }}'],
