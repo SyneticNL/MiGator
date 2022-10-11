@@ -8,4 +8,8 @@ use Synetic\Migator\Domains\EntityTypeInterface;
 
 class TextType implements EntityTypeInterface
 {
+    public function toMigrationString(): string
+    {
+        return '';
+    }
 }

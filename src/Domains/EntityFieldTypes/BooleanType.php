@@ -8,4 +8,8 @@ use Synetic\Migator\Domains\EntityTypeInterface;
 
 class BooleanType implements EntityTypeInterface
 {
+    public function toMigrationString(): string
+    {
+        return '';
+    }
 }
