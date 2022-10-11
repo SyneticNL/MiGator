@@ -43,7 +43,7 @@ class WriterTest extends TestCase
     public function test_replace_in_template(): void
     {
         $result = $this->writer->createMigration($this->testString, collect(['users', 'typos']));
-        $this->assertSame(File::get(__DIR__.'/Files/WriterTestResult.php'), $result);
+        $this->assertSame(File::get(__DIR__.'/fixtures/WriterTestResult.txt'), $result);
     }
 
     public function test_migration_name(): void
