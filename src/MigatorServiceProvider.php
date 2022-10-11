@@ -25,10 +25,8 @@ class MigatorServiceProvider extends PackageServiceProvider
     public function register()
     {
         parent::register();
-        $this->app->bind('migatorMigration', function($app) {
+        $this->app->bind('migatorMigration', function ($app) {
             return new Migration();
         });
     }
-
-
 }

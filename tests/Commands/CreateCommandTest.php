@@ -7,7 +7,6 @@ use Synetic\Migator\Tests\TestCase;
 
 class CreateCommandTest extends TestCase
 {
-
     public function setUp(): void
     {
         parent::setUp();
@@ -37,5 +36,4 @@ class CreateCommandTest extends TestCase
             ->expectsConfirmation('Would you like to work on another model?', 'no')
             ->assertExitCode(0);
     }
-
 }
