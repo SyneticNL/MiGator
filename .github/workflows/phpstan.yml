@@ -10,5 +10,5 @@ jobs:
       - uses: php-actions/composer@v6
       - uses: php-actions/phpstan@v3
         with:
-          memory_limit: 1GB
+          memory_limit: 1024M
           path: src/
