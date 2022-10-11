@@ -8,8 +8,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Synetic\Migator\Domains\Entity;
 use Synetic\Migator\Domains\EntityField;
-use Synetic\Migator\Domains\EntityTypes\BooleanType;
-use Synetic\Migator\Domains\EntityTypes\TextType;
+use Synetic\Migator\Domains\EntityFieldTypes\BooleanType;
+use Synetic\Migator\Domains\EntityFieldTypes\TextType;
 
 class CreateCommand extends Command
 {

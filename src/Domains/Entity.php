@@ -18,7 +18,7 @@ class Entity
     public function __construct(
         public string $tableName,
     ) {
-        $this->tableExists = false;//Schema::hasTable($this->tableName);
+        $this->tableExists = false; //Schema::hasTable($this->tableName);
         $this->entityFields = collect();
     }
 
