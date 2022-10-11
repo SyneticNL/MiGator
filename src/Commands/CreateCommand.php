@@ -32,7 +32,6 @@ class CreateCommand extends Command
           $entities->push($this->handleEntity(new Entity($this->argument('model') ?? $this->ask('Model'))));
         } while ($this->confirm('Would you like to work on another entity?'));
 
-        // TODO: create migrations.
         $success = (new Migration())->create($entities);
         if ($success) {
           $this->info('Migration created');
