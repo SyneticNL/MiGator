@@ -11,11 +11,11 @@ This package will ask the developer interactively for the following:
     - [x] type
         - [x] boolean
         - [x] text
-        - [ ] date
-        - [ ] datetime
+        - [x] date
+        - [x] datetime
         - [ ] json
         - [ ] id
-        - [ ] integer
+        - [x] integer
     - [ ] default value
     - [ ] index
 - [ ] relations to other entities
