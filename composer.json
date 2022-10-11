@@ -3,39 +3,50 @@
     "description": "Laravel schema migration generator.",
     "type": "package",
     "license": "MIT",
+    "keywords": [
+        "synetic",
+        "laravel",
+        "migator",
+        "migrations"
+    ],
     "autoload": {
         "psr-4": {
-            "Synetic\\Migator\\": "src/"
+            "Synetic\\Migator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Synetic\\Migator\\Tests\\": "tests"
         }
     },
     "authors": [
         {
-            "name": "Misha van Tol",
-            "email": "misha.vantol@synetic.nl"
+            "name": "Jeffrey Bertoen",
+            "email": "jeffrey@synetic.nl"
         },
         {
-            "name": "Sander Jonk",
-            "email": "sander.jonk@synetic.nl"
+            "name": "Tom van Etten",
+            "email": "tom.vanetten@synetic.nl"
         },
         {
             "name": "Aubrey Hewes",
             "email": "aubrey.hewes@synetic.nl"
         },
         {
-            "name": "Jeffrey Bertoen",
-            "email": "jeffrey@synetic.nl"
+            "name": "Sander Jonk",
+            "email": "sander.jonk@synetic.nl"
         },
         {
             "name": "Robin Speekenbrink",
             "email": "robin.speekenbrink@synetic.nl"
         },
         {
-            "name": "Jordy Vleugel",
-            "email": "jordy@synetic.nl"
+            "name": "Misha van Tol",
+            "email": "misha.vantol@synetic.nl"
         },
         {
-            "name": "Tom van Etten",
-            "email": "tom.vanetten@synetic.nl"
+            "name": "Jordy Vleugel",
+            "email": "jordy@synetic.nl"
         }
     ],
     "require": {
@@ -43,8 +54,31 @@
         "spatie/laravel-package-tools": "^1.13"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.11",
+        "laravel/pint": "^1.2",
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0.1",
+        "orchestra/testbench": "^7.9",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5",
         "roave/security-advisories": "dev-latest",
-        "orchestra/testbench": "^7.9"
+        "spatie/laravel-ray": "^1.26"
+    },
+    "scripts": {
+        "analyse": "vendor/bin/phpstan analyse",
+        "format": "vendor/bin/pint",
+        "test": "vendor/bin/phpunit",
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     },
     "extra": {
         "laravel": {
@@ -52,10 +86,5 @@
               "Synetic\\Migator\\MigatorServiceProvider"
             ]
         }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "@php ./vendor/bin/testbench package:discover --ansi"
-        ]
     }
 }
