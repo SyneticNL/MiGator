@@ -3,3 +3,9 @@ vendor/
 composer.lock
 .php-cs-fixer.cache
 .phpunit.result.cache
+build/
+coverage/
+docs/
+phpunit.xml
+phpstan.neon
+testbench.yaml
