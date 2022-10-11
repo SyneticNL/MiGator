@@ -2,6 +2,6 @@
 
 namespace Synetic\Migator\Domains;
 
-interface EntityTypeInterface {
-
+interface EntityTypeInterface
+{
 }
