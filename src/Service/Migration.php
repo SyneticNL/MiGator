@@ -6,12 +6,11 @@ namespace Synetic\Migator\Service;
 
 use Illuminate\Support\Collection;
 
-class Migration {
-
+class Migration
+{
     public function create(Collection $entityCollection)
     {
         //$up = (new SchemaBuilder)($input);
         //$result = (new Writer)($file);
     }
-
 }
