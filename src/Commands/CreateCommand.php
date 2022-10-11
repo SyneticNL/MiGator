@@ -28,6 +28,8 @@ class CreateCommand extends Command
             $this->handleEntity($entities);
         } while ($this->confirm('Would you like to work on another entity?'));
 
+        // TODO: create migrations.
+
         return self::SUCCESS;
     }
 
@@ -63,10 +65,11 @@ class CreateCommand extends Command
                 return [$field->fieldName, class_basename($field->entityType)];
             })
         );
+
         if ($this->confirm('Build entity?')) {
             $entities->push($entity);
         } else {
-            $this->warn('Cancelled entity creations');
+            $this->warn('Cancelled entity build');
         }
     }
 
