@@ -16,6 +16,7 @@ use Synetic\Migator\Domains\EntityFieldTypes\IntegerType;
 use Synetic\Migator\Domains\EntityFieldTypes\JsonType;
 use Synetic\Migator\Domains\EntityFieldTypes\StringType;
 use Synetic\Migator\Domains\EntityFieldTypes\TextType;
+use Synetic\Migator\Service\Migration;
 use Synetic\Migator\Domains\EntityFieldTypes\UuidType;
 
 class CreateCommand extends Command
@@ -32,9 +33,9 @@ class CreateCommand extends Command
             $this->handleEntity($entities);
         } while ($this->confirm('Would you like to work on another entity?'));
 
-        // TODO: create migrations.
-
-        return self::SUCCESS;
+        $success = (new Migration())->create($entities);
+        $this->info('Migration created');
+        return (int) $success;
     }
 
     private function handleEntity(Collection $entities): void
