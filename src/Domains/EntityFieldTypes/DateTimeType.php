@@ -8,8 +8,9 @@ use Synetic\Migator\Domains\EntityTypeInterface;
 
 class DateTimeType implements EntityTypeInterface
 {
-    public function toMigrationString(): string
+    public function toMigrationString(string $column): string
     {
-        return '';
+        return sprintf('$table->dateTime(\'%s\', $precision = 0);', $column);
     }
+
 }
