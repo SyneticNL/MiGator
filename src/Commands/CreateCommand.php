@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Commands;
 
-use Carbon\Doctrine\DateTimeType;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Synetic\Migator\Domains\Entity;
 use Synetic\Migator\Domains\EntityField;
 use Synetic\Migator\Domains\EntityFieldTypes\BooleanType;
+use Synetic\Migator\Domains\EntityFieldTypes\DateTimeType;
 use Synetic\Migator\Domains\EntityFieldTypes\DateType;
+use Synetic\Migator\Domains\EntityFieldTypes\IdType;
 use Synetic\Migator\Domains\EntityFieldTypes\IntegerType;
+use Synetic\Migator\Domains\EntityFieldTypes\JsonType;
 use Synetic\Migator\Domains\EntityFieldTypes\TextType;
+use Synetic\Migator\Domains\EntityFieldTypes\UuidType;
 
 class CreateCommand extends Command
 {
@@ -82,6 +85,9 @@ class CreateCommand extends Command
             'date-time' => DateTimeType::class,
             'date' => DateType::class,
             'integer' => IntegerType::class,
+            'json' => JsonType::class,
+            'id' => IdType::class,
+            'uuid' => UuidType::class,
         ]);
     }
 }
