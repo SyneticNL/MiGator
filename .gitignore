@@ -2,3 +2,9 @@
 composer.lock
 vendor/
 .phpunit.result.cache
+build/
+coverage/
+docs/
+phpunit.xml
+phpstan.neon
+testbench.yaml
