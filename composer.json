@@ -11,7 +11,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Synetic\\Migator\\": "src/"
+            "Synetic\\Migator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Synetic\\Migator\\Tests\\": "tests"
         }
     },
     "authors": [
@@ -53,8 +58,6 @@
         "nunomaduro/collision": "^6.0",
         "nunomaduro/larastan": "^2.0.1",
         "orchestra/testbench": "^7.9",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.1",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
@@ -64,13 +67,16 @@
     },
     "scripts": {
         "analyse": "vendor/bin/phpstan analyse",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "test": "vendor/bin/phpunit",
+        "post-autoload-dump": [
+            "@php ./vendor/bin/testbench package:discover --ansi"
+        ]
     },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
-            "phpstan/extension-installer": true,
-            "pestphp/pest-plugin": true
+            "phpstan/extension-installer": true
         }
     },
     "extra": {
@@ -79,10 +85,5 @@
               "Synetic\\Migator\\MigatorServiceProvider"
             ]
         }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "@php ./vendor/bin/testbench package:discover --ansi"
-        ]
     }
 }
