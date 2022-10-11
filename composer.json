@@ -1,0 +1,56 @@
+{
+    "name": "synetic/migator",
+    "description": "Laravel schema migration generator.",
+    "type": "package",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Synetic\\Migator\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Misha van Tol",
+            "email": "misha.vantol@synetic.nl"
+        },
+        {
+            "name": "Sander Jonk",
+            "email": "sander.jonk@synetic.nl"
+        },
+        {
+            "name": "Aubrey Hewes",
+            "email": "aubrey.hewes@synetic.nl"
+        },
+        {
+            "name": "Jeffrey Bertoen",
+            "email": "jeffrey@synetic.nl"
+        },
+        {
+            "name": "Robin Speekenbrink",
+            "email": "robin.speekenbrink@synetic.nl"
+        },
+        {
+            "name": "Jordy Vleugel",
+            "email": "jordy@synetic.nl"
+        },
+        {
+            "name": "Tom van Etten",
+            "email": "tom.vanetten@synetic.nl"
+        }
+    ],
+    "require": {
+        "php": "^8.0|^8.1",
+        "spatie/laravel-package-tools": "^1.13"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "orchestra/testbench": "^7.9"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+              "MigatorServiceProvider"
+            ]
+        }
+    }
+}
