@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Synetic\Migator\Service\Writer;
 
 use Illuminate\Support\Collection;
@@ -12,27 +14,29 @@ class Writer
     {
         $up = $this->formatBuilderCollectionToUp($builderCollection);
         $migration = $this->createMigration($up);
-        $storagePath = database_path().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.$this->getMigrationName($builderCollection->keys());
+        $storagePath = database_path() . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR . $this->getMigrationName(
+                $builderCollection->keys()
+            );
 
-        return File::put($storagePath, $migration);
+        return (bool)File::put($storagePath, $migration);
     }
 
     public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {
         return $builderCollection->mapWithKeys(function ($item, $key) {
-            $createSchema = 'Schema::create(\''.$key.'\', static function (Blueprint $table) {';
+            $createSchema = 'Schema::create(\'' . $key . '\', static function (Blueprint $table) {';
             $fields = $item->map(static function ($item) {
-                return '$table->'.$item.';';
+                return '$table->' . $item . ';';
             })->implode(' ');
             $closeCreateSchema = '});';
 
-            return collect([$createSchema.$fields.$closeCreateSchema]);
-        })->implode(PHP_EOL.PHP_EOL);
+            return collect([$createSchema . $fields . $closeCreateSchema]);
+        })->implode(PHP_EOL . PHP_EOL);
     }
 
     public function createMigration(string $up): string
     {
-        $template = File::get(__DIR__.'/../../../stubs/migator.stub');
+        $template = File::get(__DIR__ . '/../../../stubs/migator.stub');
 
         return str_replace(
             ['{{ up }}'],
@@ -43,6 +47,6 @@ class Writer
 
     public function getMigrationName(Collection $entityKeys): string
     {
-        return  Date::create()->format('Y_m_d_His').$entityKeys->implode('_').'_migration.php';
+        return Date::now()->format('Y_m_d_His') . '_create_' . $entityKeys->implode('_') . '_migration.php';
     }
 }
