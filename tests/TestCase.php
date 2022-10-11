@@ -9,9 +9,10 @@ use Synetic\Migator\MigatorServiceProvider;
 
 class TestCase extends Orchestra
 {
-  protected function getPackageProviders($app): array {
-    return [
-      MigatorServiceProvider::class,
-    ];
-  }
+    protected function getPackageProviders($app): array
+    {
+        return [
+            MigatorServiceProvider::class,
+        ];
+    }
 }
