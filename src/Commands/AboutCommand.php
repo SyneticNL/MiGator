@@ -14,7 +14,7 @@ class AboutCommand extends Command
 
     public function handle(): int
     {
-        $this->info('Hasta la vista, baby!');
+        $this->info('Hasta la vista, baby! ᕦ(ò_óˇ)ᕤ');
 
         return self::SUCCESS;
     }

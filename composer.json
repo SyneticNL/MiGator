@@ -1,5 +1,5 @@
 {
-    "name": "synetic/migator",
+    "name": "wearesynetic/laravel-migator",
     "description": "Laravel schema migration generator.",
     "type": "package",
     "license": "MIT",

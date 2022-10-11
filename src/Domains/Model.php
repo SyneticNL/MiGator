@@ -29,7 +29,7 @@ class Model
         $this->fields = collect();
     }
 
-    public function addField(Field $field): void
+    public function addField(Field $field)
     {
         $this->fields->add($field);
     }
