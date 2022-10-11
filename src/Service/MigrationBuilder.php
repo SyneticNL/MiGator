@@ -19,7 +19,7 @@ class MigrationBuilder
     {
         return $this->entityCollection->mapWithKeys(function (Entity $entity) {
             return [
-                $entity->tableName => $entity->entityFields->map(function (EntityField $entityField) {
+                $entity->tableName => $entity->fields->map(function (EntityField $entityField) {
                     return $entityField->entityType->toMigrationString($entityField->fieldName);
                 }),
             ];

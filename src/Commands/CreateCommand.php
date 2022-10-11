@@ -43,31 +43,31 @@ class CreateCommand extends Command
         return self::FAILURE;
     }
 
-    private function handleEntity(Entity $entity): Entity
+    private function handleEntity(Entity $model): Entity
     {
-        $existMessage = $entity->exists() ? 'Entity already exists' : 'Entity does not exist yet';
+        $existMessage = $model->exists() ? 'Entity already exists' : 'Entity does not exist yet';
         $this->info($existMessage);
 
-        $this->info('Lets configure fields for '.$entity->tableName.'!');
+        $this->info('Lets configure fields for '.$model->tableName.'!');
 
         do {
             $fieldName = $this->ask('Field name');
 
-            if ($entity->columnExists($fieldName)) {
+            if ($model->columnExists($fieldName)) {
                 $this->warn('This field already exists.');
 
                 continue;
             }
 
-            $fieldTypeName = $this->choice('Field types', $this->getEntityTypes()->keys()->toArray());
-            $fieldType = new ($this->getEntityTypes()->get($fieldTypeName))();
-            $entity->addEntityField(new EntityField($fieldName, $fieldType));
+            $fieldTypeName = $this->choice('Field types', $this->getFieldTypes()->keys()->toArray());
+            $fieldType = new ($this->getFieldTypes()->get($fieldTypeName))();
+            $model->addEntityField(new EntityField($fieldName, $fieldType));
         } while ($this->confirm('Would you like to add another field?'));
 
-        $this->info('The following fields will be created for '.$entity->tableName);
+        $this->info('The following fields will be created for '.$model->tableName);
         $this->table(
             ['name', 'type'],
-            $entity->entityFields->map(function ($field) {
+            $model->fields->map(function ($field) {
                 return [$field->fieldName, class_basename($field->entityType)];
             })
         );
@@ -76,10 +76,10 @@ class CreateCommand extends Command
             $this->warn('Cancelled entity build');
         }
 
-        return $entity;
+        return $model;
     }
 
-    private function getEntityTypes(): Collection
+    private function getFieldTypes(): Collection
     {
         // TODO: Automatically find all the different field types
         return collect([

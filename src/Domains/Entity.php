@@ -13,7 +13,7 @@ class Entity
     /**
      * @var Collection<EntityField>
      */
-    public Collection $entityFields;
+    public Collection $fields;
 
     private bool $tableExists;
 
@@ -26,12 +26,12 @@ class Entity
     ) {
         $this->tableName = Str::camel(Str::plural($model));
         $this->tableExists = Schema::hasTable($this->tableName);
-        $this->entityFields = collect();
+        $this->fields = collect();
     }
 
     public function addEntityField(EntityField $entityField): void
     {
-        $this->entityFields->add($entityField);
+        $this->fields->add($entityField);
     }
 
     public function exists(): bool
@@ -41,7 +41,7 @@ class Entity
 
     public function columnExists($columnName): bool
     {
-        if ($this->entityFields->filter(function ($item) use ($columnName) {
+        if ($this->fields->filter(function ($item) use ($columnName) {
             return $item->fieldName === $columnName;
         })->isNotEmpty()) {
             return true;
