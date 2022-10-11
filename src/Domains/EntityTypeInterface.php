@@ -6,5 +6,5 @@ namespace Synetic\Migator\Domains;
 
 interface EntityTypeInterface
 {
-    public function toMigrationString(): string;
+    public function toMigrationString(string $column): string;
 }

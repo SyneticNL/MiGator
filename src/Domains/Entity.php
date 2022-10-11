@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Schema;
 
 class Entity
 {
+    /**
+     * @var Collection<EntityField>
+     */
     public Collection $entityFields;
 
     private bool $tableExists;

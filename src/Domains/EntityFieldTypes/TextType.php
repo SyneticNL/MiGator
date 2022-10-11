@@ -8,8 +8,8 @@ use Synetic\Migator\Domains\EntityTypeInterface;
 
 class TextType implements EntityTypeInterface
 {
-    public function toMigrationString(): string
+    public function toMigrationString(string $column): string
     {
-        return '';
+        return sprintf('$table->string(\'%s\')', $column);
     }
 }
