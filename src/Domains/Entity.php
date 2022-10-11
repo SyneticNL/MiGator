@@ -6,6 +6,7 @@ namespace Synetic\Migator\Domains;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class Entity
 {
@@ -18,9 +19,12 @@ class Entity
 
     private array $columns = [];
 
+    public string $tableName;
+
     public function __construct(
-        public string $tableName,
+        public string $model,
     ) {
+        $this->tableName = Str::camel(Str::plural($model));
         $this->tableExists = Schema::hasTable($this->tableName);
         $this->entityFields = collect();
     }
