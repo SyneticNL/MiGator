@@ -11,7 +11,9 @@ class Writer
     {
         $up = $this->formatBuilderCollectionToUp($builderCollection);
         $migration = $this->createMigration($up, $builderCollection->keys());
-        $storagePath = database_path().DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR.$this->getMigrationName();
+        var_dump(database_path('migrations/' . $this->getMigrationName()));
+        die();
+        $storagePath = database_path('migrations/' . $this->getMigrationName());
 
         return File::put($storagePath, $migration);
     }
