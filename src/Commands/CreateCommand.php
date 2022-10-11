@@ -36,6 +36,7 @@ class CreateCommand extends Command
 
                 if ($entity->columnExists($fieldName)) {
                     $this->warn('This field already exists.');
+
                     continue;
                 }
 

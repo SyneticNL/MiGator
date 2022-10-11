@@ -18,7 +18,7 @@ class Entity
     public function __construct(
         public string $tableName,
     ) {
-        $this->tableExists = Schema::hasTable($this->tableName);
+        $this->tableExists = false; //Schema::hasTable($this->tableName);
         $this->entityFields = collect();
     }
 
@@ -29,8 +29,7 @@ class Entity
 
     public function exists(): bool
     {
-        //return $this->tableExists;
-        return false;
+        return $this->tableExists;
     }
 
     public function columnExists($columnName): bool
