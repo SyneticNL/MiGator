@@ -28,7 +28,7 @@ class CreateCommand extends Command
     {
         $models = collect();
         do {
-            $models->push($this->handleModel(new Model((string)($this->argument('model') ?? $this->ask('Model name')))));
+            $models->push($this->handleModel(new Model((string) ($this->argument('model') ?? $this->ask('Model name')))));
         } while ($this->confirm('Would you like to work on another model?', true));
 
         $success = app('migatorMigration')->create($models);
