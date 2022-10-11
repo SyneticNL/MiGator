@@ -13,7 +13,8 @@ class WriterTest extends TestCase
 {
     private Writer $writer;
 
-    private string $testString = 'Schema::create(\'tests\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});'.PHP_EOL;
+    private string $testCreateString = 'Schema::create(\'tests\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});'.PHP_EOL;
+    private string $testUpdateString = 'Schema::table(\'users\', static function (Blueprint $table) {$table->string(\'gps\'); $table->string(\'alter_ego\');});'.PHP_EOL;
 
     protected function setUp(): void
     {
@@ -28,7 +29,7 @@ class WriterTest extends TestCase
         $this->assertSame($result, '');
     }
 
-    public function test_writer_formatter(): void
+    public function test_writer_create_formatter(): void
     {
         $build = collect(['tests' => [
             'model' => new Model('tests'),
@@ -40,14 +41,36 @@ class WriterTest extends TestCase
 
         $result = $this->writer->formatBuilderCollectionToUp($build);
         $this->assertSame(
-            $this->testString, $result
+            $this->testCreateString, $result
         );
     }
 
-    public function test_replace_in_template(): void
+    public function test_create_replace_in_template(): void
     {
-        $result = $this->writer->createMigration($this->testString, collect(['users', 'typos']));
-        $this->assertSame(File::get(__DIR__.'/fixtures/WriterTestResult.txt'), $result);
+        $result = $this->writer->createMigration($this->testCreateString);
+        $this->assertSame(File::get(__DIR__.'/fixtures/WriterCreateTestsResult.txt'), $result);
+    }
+
+    public function test_update_create_formatter(): void
+    {
+        $build = collect(['users' => [
+            'model' => new Model('users'),
+            'fields' => collect([
+                'string(\'gps\')',
+                'string(\'alter_ego\')',
+            ])
+        ]]);
+
+        $result = $this->writer->formatBuilderCollectionToUp($build);
+        $this->assertSame(
+            $this->testUpdateString, $result
+        );
+    }
+
+    public function test_update_replace_in_template(): void
+    {
+        $result = $this->writer->createMigration($this->testUpdateString);
+        $this->assertSame(File::get(__DIR__.'/fixtures/WriterUpdateUsersResult.txt'), $result);
     }
 
     public function test_migration_name(): void
