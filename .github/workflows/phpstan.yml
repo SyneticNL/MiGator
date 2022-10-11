@@ -5,5 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
       - uses: php-actions/composer@v6
-      - uses: php-actions/phpunit@v3
+      - uses: php-actions/phpstan@v3
+        with:
+          path: src/

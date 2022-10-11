@@ -23,14 +23,38 @@ class Writer
     public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {
         return $builderCollection->mapWithKeys(function ($item, $key) {
-            $createSchema = 'Schema::create(\''.$key.'\', static function (Blueprint $table) {';
-            $fields = $item->map(static function ($item) {
+            $fields = $item['fields']->map(static function ($item) {
                 return '$table->'.$item.';';
             })->implode(' ');
-            $closeCreateSchema = '});';
 
-            return collect([$createSchema.$fields.$closeCreateSchema]);
+            if ($item['model']->exists()) {
+                return [$key => $this->formatBuilderCollectionUpdate($fields, $key)];
+            }
+
+            return [$key => $this->formatBuilderCollectionCreate($fields, $key)];
         })->implode(PHP_EOL.PHP_EOL);
+    }
+
+    public function formatBuilderCollectionUpdate($fields, $tableName): string
+    {
+        $template = File::get(__DIR__.'/../../../stubs/migator.update.stub');
+
+        return str_replace(
+            ['{{ table }}', '{{ fields }}'],
+            [$tableName, $fields],
+            $template
+        );
+    }
+
+    public function formatBuilderCollectionCreate($fields, $tableName): string
+    {
+        $template = File::get(__DIR__.'/../../../stubs/migator.create.stub');
+
+        return str_replace(
+            ['{{ table }}', '{{ fields }}'],
+            [$tableName, $fields],
+            $template
+        );
     }
 
     public function createMigration(string $up): string
@@ -44,8 +68,8 @@ class Writer
         );
     }
 
-    public function getMigrationName(Collection $entityKeys): string
+    public function getMigrationName(Collection $models): string
     {
-        return date('Y_m_d_His').'_create_'.$entityKeys->implode('_').'_migration.php';
+        return date('Y_m_d_His').'_create_'.$models->implode('_').'_migration.php';
     }
 }

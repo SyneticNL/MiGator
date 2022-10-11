@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Synetic\Migator\Tests\Feature;
 
 use Illuminate\Support\Facades\File;
+use Synetic\Migator\Domains\Model;
 use Synetic\Migator\Service\Writer\Writer;
 use Synetic\Migator\Tests\TestCase;
 
@@ -12,7 +13,9 @@ class WriterTest extends TestCase
 {
     private Writer $writer;
 
-    private string $testString = 'Schema::create(\'users\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});';
+    private string $testCreateString = 'Schema::create(\'tests\', static function (Blueprint $table) {$table->id(); $table->string(\'name\');});'.PHP_EOL;
+
+    private string $testUpdateString = 'Schema::table(\'users\', static function (Blueprint $table) {$table->string(\'gps\'); $table->string(\'alter_ego\');});'.PHP_EOL;
 
     protected function setUp(): void
     {
@@ -27,23 +30,82 @@ class WriterTest extends TestCase
         $this->assertSame($result, '');
     }
 
-    public function test_writer_formatter(): void
+    public function test_writer_create_formatter(): void
     {
-        $build = collect(['users' => collect([
-            'id()',
-            'string(\'name\')',
-        ])]);
+        $build = collect([
+            'tests' => [
+                'model' => new Model('tests'),
+                'fields' => collect([
+                    'id()',
+                    'string(\'name\')',
+                ]),
+            ],
+        ]);
 
         $result = $this->writer->formatBuilderCollectionToUp($build);
         $this->assertSame(
-            $this->testString, $result
+            $this->testCreateString,
+            $result
         );
     }
 
-    public function test_replace_in_template(): void
+    public function test_create_replace_in_template(): void
     {
-        $result = $this->writer->createMigration($this->testString, collect(['users', 'typos']));
-        $this->assertSame(File::get(__DIR__.'/fixtures/WriterTestResult.txt'), $result);
+        $result = $this->writer->createMigration($this->testCreateString);
+        $this->assertSame(File::get(__DIR__.'/fixtures/WriterCreateTestsResult.txt'), $result);
+    }
+
+    public function test_update_create_formatter(): void
+    {
+        $build = collect([
+            'users' => [
+                'model' => new Model('users'),
+                'fields' => collect([
+                    'string(\'gps\')',
+                    'string(\'alter_ego\')',
+                ]),
+            ],
+        ]);
+
+        $result = $this->writer->formatBuilderCollectionToUp($build);
+        $this->assertSame(
+            $this->testUpdateString,
+            $result
+        );
+    }
+
+    public function test_it_can_create_multiple_models(): void
+    {
+        $build = collect([
+            'modelAs' => [
+                'model' => new Model('modelA'),
+                'fields' => collect([
+                    'string(\'a_foo\')',
+                    'string(\'a_bar\')',
+                ]),
+            ],
+            'modelBs' => [
+                'model' => new Model('modelB'),
+                'fields' => collect([
+                    'string(\'b_foo\')',
+                    'string(\'b_bar\')',
+                ]),
+            ],
+        ]);
+
+        $result = $this->writer->formatBuilderCollectionToUp($build);
+
+        $this->assertStringContainsString('modelAs', $result);
+        $this->assertStringContainsString('modelBs', $result);
+
+        $this->assertStringContainsString('a_foo', $result);
+        $this->assertStringContainsString('a_bar', $result);
+    }
+
+    public function test_update_replace_in_template(): void
+    {
+        $result = $this->writer->createMigration($this->testUpdateString);
+        $this->assertSame(File::get(__DIR__.'/fixtures/WriterUpdateUsersResult.txt'), $result);
     }
 
     public function test_migration_name(): void

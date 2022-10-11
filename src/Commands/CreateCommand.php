@@ -17,22 +17,21 @@ use Synetic\Migator\Domains\FieldTypes\StringType;
 use Synetic\Migator\Domains\FieldTypes\TextType;
 use Synetic\Migator\Domains\FieldTypes\UuidType;
 use Synetic\Migator\Domains\Model;
-use Synetic\Migator\Service\Migration;
 
 class CreateCommand extends Command
 {
     protected $signature = 'migator:create {model? : The model you\'re going to generate a migration for.}';
 
-    protected $description = 'Create migration';
+    protected $description = 'Create a migration.';
 
     public function handle(): int
     {
-        $entities = collect();
+        $models = collect();
         do {
-            $entities->push($this->handleModel(new Model($this->argument('model') ?? $this->ask('Model name'))));
-        } while ($this->confirm('Would you like to work on another model?'));
+            $models->push($this->handleModel(new Model((string) ($this->argument('model') ?? $this->ask('Model name')))));
+        } while ($this->confirm('Would you like to work on another model?', true));
 
-        $success = (new Migration())->create($entities);
+        $success = app('migatorMigration')->create($models);
         if ($success) {
             $this->info('Migration created, Get to tha choppa! ᕦ(ò_óˇ)ᕤ ');
 
@@ -62,7 +61,7 @@ class CreateCommand extends Command
             $fieldTypeName = $this->choice('Field types', $this->getFieldTypes()->keys()->toArray());
             $fieldType = new ($this->getFieldTypes()->get($fieldTypeName))();
             $model->addField(new Field($name, $fieldType));
-        } while ($this->confirm('Would you like to add another field?'));
+        } while ($this->confirm('Would you like to add another field?', true));
 
         $this->info('The following fields will be created for '.$model->tableName.':');
         $this->table(
@@ -72,7 +71,7 @@ class CreateCommand extends Command
             })
         );
 
-        if (! $this->confirm('Do you want to build the model ['.$model->tableName.']?')) {
+        if (! $this->confirm('Do you want to build the model ['.$model->tableName.']?', true)) {
             $this->warn('Cancelled build');
         }
 
