@@ -29,15 +29,17 @@ class CreateCommand extends Command
     {
         $entities = collect();
         do {
-          $entities->push($this->handleEntity(new Entity($this->argument('model') ?? $this->ask('Model'))));
+            $entities->push($this->handleEntity(new Entity($this->argument('model') ?? $this->ask('Model'))));
         } while ($this->confirm('Would you like to work on another entity?'));
 
         $success = (new Migration())->create($entities);
         if ($success) {
-          $this->info('Migration created');
-          return self::SUCCESS;
+            $this->info('Migration created');
+
+            return self::SUCCESS;
         }
         $this->error('Arnold wasnt able to generate your migration. Get to the choppa!');
+
         return self::FAILURE;
     }
 
@@ -70,9 +72,10 @@ class CreateCommand extends Command
             })
         );
 
-        if (!$this->confirm('Build entity?')) {
-          $this->warn('Cancelled entity build');
+        if (! $this->confirm('Build entity?')) {
+            $this->warn('Cancelled entity build');
         }
+
         return $entity;
     }
 
