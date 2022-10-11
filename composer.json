@@ -21,32 +21,32 @@
     },
     "authors": [
         {
-            "name": "Jeffrey Bertoen",
-            "email": "jeffrey@synetic.nl"
-        },
-        {
-            "name": "Tom van Etten",
-            "email": "tom.vanetten@synetic.nl"
-        },
-        {
-            "name": "Aubrey Hewes",
-            "email": "aubrey.hewes@synetic.nl"
+            "name": "Misha van Tol",
+            "email": "misha.vantol@synetic.nl"
         },
         {
             "name": "Sander Jonk",
             "email": "sander.jonk@synetic.nl"
         },
         {
+            "name": "Aubrey Hewes",
+            "email": "aubrey.hewes@synetic.nl"
+        },
+        {
+            "name": "Jeffrey Bertoen",
+            "email": "jeffrey@synetic.nl"
+        },
+        {
             "name": "Robin Speekenbrink",
             "email": "robin.speekenbrink@synetic.nl"
         },
         {
-            "name": "Misha van Tol",
-            "email": "misha.vantol@synetic.nl"
-        },
-        {
             "name": "Jordy Vleugel",
             "email": "jordy@synetic.nl"
+        },
+        {
+            "name": "Tom van Etten",
+            "email": "tom.vanetten@synetic.nl"
         }
     ],
     "require": {
