@@ -78,6 +78,9 @@ class CreateCommand extends Command
         return $model;
     }
 
+    /**
+     * @return Collection<string, string>
+     */
     private function getFieldTypes(): Collection
     {
         // TODO: Automatically discover all different field types
