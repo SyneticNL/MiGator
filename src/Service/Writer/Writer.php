@@ -11,7 +11,7 @@ use Synetic\Migator\Domains\Model;
 class Writer
 {
     /**
-     * @param Collection<string, array{model: Model, fields: Collection<int, string>}>  $builderCollection
+     * @param  Collection<string, array{model: Model, fields: Collection<int, string>}>  $builderCollection
      */
     public function write(Collection $builderCollection): bool
     {
@@ -25,7 +25,7 @@ class Writer
     }
 
     /**
-     * @param Collection<string, array{model: Model, fields: Collection<int, string>}>  $builderCollection
+     * @param  Collection<string, array{model: Model, fields: Collection<int, string>}>  $builderCollection
      */
     public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {
@@ -76,7 +76,7 @@ class Writer
     }
 
     /**
-     * @param Collection<int, string> $models
+     * @param  Collection<int, string>  $models
      */
     public function getMigrationName(Collection $models): string
     {
