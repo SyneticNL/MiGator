@@ -26,6 +26,7 @@ abstract class AbstractFieldType implements FieldTypeInterface
     {
         $this->hasDefaultValue = true;
         $this->defaultValue = $default;
+
         return $this;
     }
 
@@ -38,7 +39,7 @@ abstract class AbstractFieldType implements FieldTypeInterface
                     ->append(', ')
                     ->append(
                         $this->getParameters()
-                            ->map(fn($value, $key) => sprintf('$%s = %s', $key, $value ?? 'null'))
+                            ->map(fn ($value, $key) => sprintf('$%s = %s', $key, $value ?? 'null'))
                             ->join(', ')
                     );
             })
@@ -61,6 +62,6 @@ abstract class AbstractFieldType implements FieldTypeInterface
             $default = $default ? 'true' : 'false';
         }
 
-        return (string)($default ?? 'null');
+        return (string) ($default ?? 'null');
     }
 }
