@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\File;
 
 class Writer
 {
-
     /**
-     * @param Collection<string, array> $builderCollection
+     * @param  Collection<string, array>  $builderCollection
      */
     public function write(Collection $builderCollection): bool
     {
@@ -25,7 +24,7 @@ class Writer
     }
 
     /**
-     * @param Collection<string, array> $builderCollection
+     * @param  Collection<string, array>  $builderCollection
      */
     public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {

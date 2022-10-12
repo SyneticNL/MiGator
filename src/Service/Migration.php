@@ -10,9 +10,8 @@ use Synetic\Migator\Service\Writer\Writer;
 
 class Migration
 {
-
     /**
-     * @param Collection<int, Model> $modelCollection
+     * @param  Collection<int, Model>  $modelCollection
      */
     public function create(Collection $modelCollection): bool
     {
