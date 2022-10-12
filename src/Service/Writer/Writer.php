@@ -52,7 +52,7 @@ class Writer
         );
     }
 
-    public function formatBuilderCollectionCreate($fields, $tableName): string
+    public function formatBuilderCollectionCreate(string $fields, string $tableName): string
     {
         $template = File::get(__DIR__.'/../../../stubs/migator.create.stub');
 
