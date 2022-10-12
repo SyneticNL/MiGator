@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Domains\FieldTypes;
 
-use Synetic\Migator\Domains\FieldInterface;
-
-class BooleanType implements FieldInterface
+class BooleanType extends AbstractFieldType
 {
-    public function toMigrationString(string $column): string
-    {
-        return sprintf('boolean(\'%s\')', $column);
-    }
+    protected string $method = 'boolean';
 }

@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Domains\FieldTypes;
 
-use Synetic\Migator\Domains\FieldInterface;
+use Illuminate\Support\Collection;
 
-class DateTimeType implements FieldInterface
+class DateTimeType extends AbstractFieldType
 {
-    public function toMigrationString(string $column): string
+    protected string $method = 'dateTime';
+
+    public function __construct(
+        private ?int $precision = 0
+    ) {
+    }
+
+    protected function getParameters(): Collection
     {
-        return sprintf('dateTime(\'%s\', $precision = 0);', $column);
+        return collect()->put('precision', $this->precision);
     }
 }

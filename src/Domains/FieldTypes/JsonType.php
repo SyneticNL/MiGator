@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Domains\FieldTypes;
 
-use Synetic\Migator\Domains\FieldInterface;
-
-class JsonType implements FieldInterface
+class JsonType extends AbstractFieldType
 {
-    public function toMigrationString(string $column): string
-    {
-        return sprintf('json(\'%s\')', $column);
-    }
+    protected string $method = 'json';
 }
