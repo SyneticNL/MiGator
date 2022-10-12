@@ -24,6 +24,9 @@ class Writer
         return (bool) File::put($storagePath, $migration);
     }
 
+    /**
+     * @param Collection<string, array> $builderCollection
+     */
     public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {
         return $builderCollection->mapWithKeys(function ($item, $key) {
