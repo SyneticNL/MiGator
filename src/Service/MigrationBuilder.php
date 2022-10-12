@@ -18,6 +18,9 @@ class MigrationBuilder
     ) {
     }
 
+    /**
+     * @return Collection<string, array{model: Model, fields: Collection<int, string>}>
+     */
     public function getBuildCollection(): Collection
     {
         return $this->modelCollection->mapWithKeys(function (Model $model) {
