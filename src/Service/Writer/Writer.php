@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\File;
 
 class Writer
 {
+
+    /**
+     * @param Collection<string, array> $builderCollection
+     */
     public function write(Collection $builderCollection): bool
     {
         $up = $this->formatBuilderCollectionToUp($builderCollection);
@@ -35,7 +39,7 @@ class Writer
         })->implode(PHP_EOL.PHP_EOL);
     }
 
-    public function formatBuilderCollectionUpdate($fields, $tableName): string
+    public function formatBuilderCollectionUpdate(string $fields, string $tableName): string
     {
         $template = File::get(__DIR__.'/../../../stubs/migator.update.stub');
 

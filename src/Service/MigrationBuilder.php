@@ -10,6 +10,10 @@ use Synetic\Migator\Domains\Model;
 
 class MigrationBuilder
 {
+
+    /**
+     * @param \Illuminate\Support\Collection<int, Model> $modelCollection
+     */
     public function __construct(
         private Collection $modelCollection
     ) {
