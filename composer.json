@@ -23,31 +23,45 @@
     "authors": [
         {
             "name": "Misha van Tol",
-            "email": "misha.vantol@synetic.nl"
+            "email": "misha.vantol@synetic.nl",
+            "homepage": "https://synetic.nl",
+            "role": "developer"
         },
         {
             "name": "Sander Jonk",
-            "email": "sander.jonk@synetic.nl"
+            "email": "sander.jonk@synetic.nl",
+            "homepage": "https://synetic.nl",
+            "role": "developer"
         },
         {
             "name": "Aubrey Hewes",
-            "email": "aubrey.hewes@synetic.nl"
+            "email": "aubrey.hewes@synetic.nl",
+            "homepage": "https://synetic.nl",
+            "role": "developer"
         },
         {
             "name": "Jeffrey Bertoen",
-            "email": "jeffrey@synetic.nl"
+            "email": "jeffrey@synetic.nl",
+            "homepage": "https://synetic.nl",
+            "role": "developer"
         },
         {
             "name": "Robin Speekenbrink",
-            "email": "robin.speekenbrink@synetic.nl"
+            "email": "robin.speekenbrink@synetic.nl",
+            "homepage": "https://synetic.nl",
+            "role": "developer"
         },
         {
             "name": "Jordy Vleugel",
-            "email": "jordy@synetic.nl"
+            "email": "jordy@synetic.nl",
+            "homepage": "https://synetic.nl",
+            "role": "developer"
         },
         {
             "name": "Tom van Etten",
-            "email": "tom.vanetten@synetic.nl"
+            "email": "tom.vanetten@synetic.nl",
+            "homepage": "https://synetic.nl",
+            "role": "product owner for MiGator"
         }
     ],
     "require": {
