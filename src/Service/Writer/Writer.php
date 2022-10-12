@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\File;
 
 class Writer
 {
+    /**
+     * @param  Collection<string, array>  $builderCollection
+     */
     public function write(Collection $builderCollection): bool
     {
         $up = $this->formatBuilderCollectionToUp($builderCollection);
@@ -20,6 +23,9 @@ class Writer
         return (bool) File::put($storagePath, $migration);
     }
 
+    /**
+     * @param  Collection<string, array>  $builderCollection
+     */
     public function formatBuilderCollectionToUp(Collection $builderCollection): string
     {
         return $builderCollection->mapWithKeys(function ($item, $key) {
