@@ -8,7 +8,7 @@ class Field
 {
     public function __construct(
         public string $name,
-        public FieldInterface $type
+        public FieldTypeInterface $type
     ) {
     }
 }

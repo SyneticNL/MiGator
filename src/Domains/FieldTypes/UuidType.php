@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Domains\FieldTypes;
 
-use Synetic\Migator\Domains\FieldInterface;
-
-class UuidType implements FieldInterface
+class UuidType extends AbstractFieldType
 {
-    public function toMigrationString(string $column): string
-    {
-        return sprintf('uuid(\'%s\')', $column);
-    }
+    protected string $method = 'uuid';
 }

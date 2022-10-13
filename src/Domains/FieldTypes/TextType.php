@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Domains\FieldTypes;
 
-use Synetic\Migator\Domains\FieldInterface;
-
-class TextType implements FieldInterface
+class TextType extends AbstractFieldType
 {
-    public function toMigrationString(string $column): string
-    {
-        return sprintf('text(\'%s\')', $column);
-    }
+    protected string $method = 'text';
 }
