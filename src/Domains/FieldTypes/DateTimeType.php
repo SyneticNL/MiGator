@@ -17,6 +17,6 @@ class DateTimeType extends AbstractFieldType
 
     protected function getParameters(): Collection
     {
-        return collect()->put('precision', $this->precision);
+        return (new Collection())->put('precision', $this->precision);
     }
 }

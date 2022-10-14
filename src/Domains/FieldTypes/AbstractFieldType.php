@@ -19,7 +19,7 @@ abstract class AbstractFieldType implements FieldTypeInterface
 
     protected function getParameters(): Collection
     {
-        return collect();
+        return new Collection();
     }
 
     public function setDefault(mixed $default): static
