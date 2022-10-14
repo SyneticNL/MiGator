@@ -25,10 +25,10 @@ This package will ask the developer interactively for the following:
         - [x] json
         - [x] id
         - [x] integer
-    - [-] default value ((#11)[https://github.com/SyneticNL/MiGator/issues/11])
-    - [-] index ((#12)[https://github.com/SyneticNL/MiGator/issues/12])
-    - [-] foreign keys ((#13)[])
-- [-] relations to other entities ((#9)[])
+    - [-] default value (#11)
+    - [-] index (#12)
+    - [-] foreign keys (#13)
+- [-] relations to other entities (#9)
 
 It will then ask for writing this into a migration file. It creates and writes a new migration file to the default laravel migration path.
 
