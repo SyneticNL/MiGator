@@ -13,13 +13,18 @@ abstract class AbstractFieldType implements FieldTypeInterface
 {
     protected string $method = '';
 
-    protected bool $hasDefaultValue = false;
+    private bool $hasDefaultValue = false;
 
-    protected mixed $defaultValue;
+    private mixed $defaultValue;
 
     protected function getParameters(): Collection
     {
         return new Collection();
+    }
+
+    public function getDefault(): mixed
+    {
+        return $this->defaultValue;
     }
 
     public function setDefault(mixed $default): static

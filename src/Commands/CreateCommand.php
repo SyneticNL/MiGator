@@ -7,6 +7,7 @@ namespace Synetic\Migator\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Synetic\Migator\Domains\Field;
+use Synetic\Migator\Domains\FieldTypeInterface;
 use Synetic\Migator\Domains\FieldTypes\BooleanType;
 use Synetic\Migator\Domains\FieldTypes\DateTimeType;
 use Synetic\Migator\Domains\FieldTypes\DateType;
@@ -59,15 +60,24 @@ class CreateCommand extends Command
             }
 
             $fieldTypeName = $this->choice('Field types', $this->getFieldTypes()->keys()->toArray());
+            /** @var FieldTypeInterface $fieldType */
             $fieldType = new ($this->getFieldTypes()->get($fieldTypeName))();
+
+            $defaultValue = $this->ask('Default value');
+            $fieldType->setDefault($defaultValue);
+
             $model->addField(new Field($name, $fieldType));
         } while ($this->confirm('Would you like to add another field?', true));
 
         $this->info('The following fields will be created for '.$model->tableName.':');
         $this->table(
-            ['name', 'type'],
-            $model->fields->map(function ($field) {
-                return [$field->name, class_basename($field->type)];
+            ['name', 'type', 'defaultValue'],
+            $model->fields->map(function (Field $field) {
+                return [
+                    $field->name,
+                    class_basename($field->type),
+                    $field->type->getDefault()
+                ];
             })
         );
 
