@@ -76,7 +76,7 @@ class CreateCommand extends Command
                 return [
                     $field->name,
                     class_basename($field->type),
-                    $field->type->getDefault()
+                    $field->type->getDefault(),
                 ];
             })
         );
