@@ -80,8 +80,8 @@ class CreateCommand extends Command
         $this->info('The following fields will be created for ' . $model->tableName . ':');
         $this->table(
             ['name', 'type'],
-            $model->fields->map(function ($field) {
-                return [$field->name, class_basename($field->type)];
+            $model->fields->map(function (Field $field) {
+                return [$field->name, (string)$field->type];
             })
         );
 
