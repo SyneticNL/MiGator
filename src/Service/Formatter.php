@@ -8,18 +8,22 @@ use Illuminate\Support\Collection;
 use Synetic\Migator\Domains\Field;
 use Synetic\Migator\Domains\Model;
 
-class Formatter
+final class Formatter
 {
     public function render(Collection $modelCollection): string
     {
+        if ($modelCollection->isEmpty()) {
+            return '';
+        }
+
         return str_replace(
             '{{ up }}',
             rtrim($this->renderUps($this->getBuildCollection($modelCollection))),
-            file_get_contents(__DIR__ . '/../../stubs/migator.stub')
+            (string)file_get_contents(__DIR__ . '/../../stubs/migator.stub')
         );
     }
 
-    public function renderUps(Collection $builderCollection): string
+    private function renderUps(Collection $builderCollection): string
     {
         return $builderCollection->mapWithKeys(function ($item, $tableName) {
             $fields = $item['fields']->map(static function ($item) {
@@ -31,7 +35,7 @@ class Formatter
             $up = str_replace(
                 ['{{ table }}', '{{ fields }}'],
                 [$tableName, $fields],
-                file_get_contents(__DIR__ . '/../../stubs/' . $stub)
+                (string)file_get_contents(__DIR__ . '/../../stubs/' . $stub)
             );
 
             return [$tableName => $up];
