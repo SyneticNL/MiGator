@@ -93,7 +93,7 @@ class CreateCommand extends Command
     }
 
     /**
-     * @return Collection<string|int,FieldTypeInterface>
+     * @return Collection<string,FieldTypeInterface>
      */
     private function getFieldTypes(): Collection
     {
