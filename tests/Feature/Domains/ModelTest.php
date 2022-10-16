@@ -43,7 +43,7 @@ class ModelTest extends TestCase
     {
         $model = new Model($table);
         static::assertEquals($expected, $model->columnExists($field));
-        if (!$expected) {
+        if (! $expected) {
             $model->addField(new Field($field, new StringType()));
             static::assertEquals(true, $model->columnExists($field));
         }

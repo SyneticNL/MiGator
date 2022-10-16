@@ -17,6 +17,7 @@ class Migration
     public function create(Collection $modelCollection): bool
     {
         $contents = $this->formatter->render($modelCollection);
+
         return $this->writer->write($contents, $modelCollection->pluck('tableName'));
     }
 }

@@ -36,7 +36,7 @@ class FormatterTest extends TestCase
 
         $result = $this->formatter->render($modelCollection);
 
-        $this->assertStringEqualsFile(__DIR__ . '/FormatterTest/expected.create.php', $result);
+        $this->assertStringEqualsFile(__DIR__.'/FormatterTest/expected.create.php', $result);
     }
 
     public function test_it_can_handle_empty_collection(): void
@@ -47,7 +47,6 @@ class FormatterTest extends TestCase
 
     public function test_it_updates_existing_models(): void
     {
-
         $model = new Model('user');
         $model->addField(new Field('baz', new TextType()));
 
@@ -58,6 +57,6 @@ class FormatterTest extends TestCase
 
         $result = $this->formatter->render($modelCollection);
 
-        $this->assertStringEqualsFile(__DIR__ . '/FormatterTest/expected.update.php', $result);
+        $this->assertStringEqualsFile(__DIR__.'/FormatterTest/expected.update.php', $result);
     }
 }

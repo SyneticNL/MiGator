@@ -19,7 +19,7 @@ final class Formatter
         return str_replace(
             '{{ up }}',
             rtrim($this->renderUps($this->getBuildCollection($modelCollection))),
-            (string)file_get_contents(__DIR__ . '/../../stubs/migator.stub')
+            (string) file_get_contents(__DIR__.'/../../stubs/migator.stub')
         );
     }
 
@@ -27,15 +27,15 @@ final class Formatter
     {
         return $builderCollection->mapWithKeys(function ($item, $tableName) {
             $fields = $item['fields']->map(static function ($item) {
-                return '            $table->' . $item . ';';
+                return '            $table->'.$item.';';
             })->implode(PHP_EOL);
 
-            $stub = 'migator.' . ($item['model']->exists() ? 'update' : 'create') . '.stub';
+            $stub = 'migator.'.($item['model']->exists() ? 'update' : 'create').'.stub';
 
             $up = str_replace(
                 ['{{ table }}', '{{ fields }}'],
                 [$tableName, $fields],
-                (string)file_get_contents(__DIR__ . '/../../stubs/' . $stub)
+                (string) file_get_contents(__DIR__.'/../../stubs/'.$stub)
             );
 
             return [$tableName => $up];
