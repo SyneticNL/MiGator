@@ -36,7 +36,7 @@ class FormatterTest extends TestCase
 
         $result = $this->formatter->render($modelCollection);
 
-        $this->assertStringEqualsFile(__DIR__.'/FormatterTest/expected.create.php', $result);
+        $this->assertStringEqualsFile(__DIR__.'/FormatterTest/expected.create', $result);
     }
 
     public function test_it_can_handle_empty_collection(): void
@@ -57,6 +57,6 @@ class FormatterTest extends TestCase
 
         $result = $this->formatter->render($modelCollection);
 
-        $this->assertStringEqualsFile(__DIR__.'/FormatterTest/expected.update.php', $result);
+        $this->assertStringEqualsFile(__DIR__.'/FormatterTest/expected.update', $result);
     }
 }
