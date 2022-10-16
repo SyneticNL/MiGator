@@ -1,1 +1,3 @@
-Schema::create('{{ table }}', static function (Blueprint $table) {{{ fields }}});
+        Schema::create('{{ table }}', static function (Blueprint $table) {
+{{ fields }}
+        });
