@@ -7,6 +7,7 @@ namespace Synetic\Migator\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Synetic\Migator\Domains\Field;
+use Synetic\Migator\Domains\FieldTypeInterface;
 use Synetic\Migator\Domains\FieldTypes\BooleanType;
 use Synetic\Migator\Domains\FieldTypes\DateTimeType;
 use Synetic\Migator\Domains\FieldTypes\DateType;
@@ -24,11 +25,19 @@ class CreateCommand extends Command
 
     protected $description = 'Create a migration.';
 
+    private Collection $fieldTypes;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->fieldTypes = $this->getFieldTypes();
+    }
+
     public function handle(): int
     {
         $models = new Collection();
         do {
-            $models->push($this->handleModel(new Model((string) ($this->argument('model') ?? $this->ask('Model name')))));
+            $models->push($this->handleModel(new Model((string)($this->argument('model') ?? $this->ask('Model name')))));
         } while ($this->confirm('Would you like to work on another model?', true));
 
         $success = app('migatorMigration')->create($models);
@@ -47,7 +56,7 @@ class CreateCommand extends Command
         $existMessage = $model->exists() ? 'Model already exists' : 'Model does not exist yet';
         $this->info($existMessage);
 
-        $this->info('Let\'s configure fields for '.$model->tableName.'!');
+        $this->info('Let\'s configure fields for ' . $model->tableName . '!');
 
         do {
             $name = $this->ask('Field name');
@@ -58,12 +67,17 @@ class CreateCommand extends Command
                 continue;
             }
 
-            $fieldTypeName = $this->choice('Field types', $this->getFieldTypes()->keys()->toArray());
-            $fieldType = new ($this->getFieldTypes()->get($fieldTypeName))();
-            $model->addField(new Field($name, $fieldType));
+            $choice = $this->choice('Field type', $this->fieldTypes->keys()->toArray());
+
+            if (is_string($choice)) {
+                $fieldType = $this->fieldTypes->get($choice);
+                if ($fieldType !== null) {
+                    $model->addField(new Field($name, $fieldType));
+                }
+            }
         } while ($this->confirm('Would you like to add another field?', true));
 
-        $this->info('The following fields will be created for '.$model->tableName.':');
+        $this->info('The following fields will be created for ' . $model->tableName . ':');
         $this->table(
             ['name', 'type'],
             $model->fields->map(function ($field) {
@@ -71,7 +85,7 @@ class CreateCommand extends Command
             })
         );
 
-        if (! $this->confirm('Do you want to build the model ['.$model->tableName.']?', true)) {
+        if (!$this->confirm('Do you want to build the model [' . $model->tableName . ']?', true)) {
             $this->warn('Cancelled build');
         }
 
@@ -79,21 +93,20 @@ class CreateCommand extends Command
     }
 
     /**
-     * @return Collection<string, string>
+     * @return Collection<string|int,FieldTypeInterface>
      */
     private function getFieldTypes(): Collection
     {
-        // TODO: Automatically discover all different field types
-        return new Collection([
-            'id' => IdType::class,
-            'string' => StringType::class,
-            'integer' => IntegerType::class,
-            'date-time' => DateTimeType::class,
-            'text' => TextType::class,
-            'boolean' => BooleanType::class,
-            'date' => DateType::class,
-            'json' => JsonType::class,
-            'uuid' => UuidType::class,
-        ]);
+        return collect([
+            new IdType(),
+            new StringType(),
+            new IntegerType(),
+            new DateTimeType(),
+            new TextType(),
+            new BooleanType(),
+            new DateType(),
+            new JsonType(),
+            new UuidType(),
+        ])->mapWithKeys(fn(FieldTypeInterface $fieldType) => [(string)$fieldType => $fieldType]);
     }
 }

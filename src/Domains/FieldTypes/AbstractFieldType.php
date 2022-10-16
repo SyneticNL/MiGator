@@ -9,8 +9,10 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Synetic\Migator\Domains\FieldTypeInterface;
 
-abstract class AbstractFieldType implements FieldTypeInterface
+abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
 {
+    protected string $label = '';
+
     protected string $method = '';
 
     protected bool $hasDefaultValue = false;
@@ -39,7 +41,7 @@ abstract class AbstractFieldType implements FieldTypeInterface
                     ->append(', ')
                     ->append(
                         $this->getParameters()
-                            ->map(fn ($value, $key) => sprintf('$%s = %s', $key, $value ?? 'null'))
+                            ->map(fn($value, $key) => sprintf('$%s = %s', $key, $value ?? 'null'))
                             ->join(', ')
                     );
             })
@@ -62,6 +64,11 @@ abstract class AbstractFieldType implements FieldTypeInterface
             $default = $default ? 'true' : 'false';
         }
 
-        return (string) ($default ?? 'null');
+        return (string)($default ?? 'null');
+    }
+
+    public function __toString(): string
+    {
+        return $this->label ?: $this->method;
     }
 }
