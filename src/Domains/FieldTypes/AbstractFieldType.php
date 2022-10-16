@@ -9,8 +9,10 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Synetic\Migator\Domains\FieldTypeInterface;
 
-abstract class AbstractFieldType implements FieldTypeInterface
+abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
 {
+    protected string $label = '';
+
     protected string $method = '';
 
     protected bool $hasDefaultValue = false;
@@ -63,5 +65,10 @@ abstract class AbstractFieldType implements FieldTypeInterface
         }
 
         return (string) ($default ?? 'null');
+    }
+
+    public function __toString(): string
+    {
+        return $this->label ?: $this->method;
     }
 }
