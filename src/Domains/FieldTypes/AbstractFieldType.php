@@ -41,7 +41,7 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
                     ->append(', ')
                     ->append(
                         $this->getParameters()
-                            ->map(fn($value, $key) => sprintf('$%s = %s', $key, $value ?? 'null'))
+                            ->map(fn ($value, $key) => sprintf('$%s = %s', $key, $value ?? 'null'))
                             ->join(', ')
                     );
             })
@@ -64,7 +64,7 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
             $default = $default ? 'true' : 'false';
         }
 
-        return (string)($default ?? 'null');
+        return (string) ($default ?? 'null');
     }
 
     public function __toString(): string

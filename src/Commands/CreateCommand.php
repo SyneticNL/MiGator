@@ -37,7 +37,7 @@ class CreateCommand extends Command
     {
         $models = new Collection();
         do {
-            $models->push($this->handleModel(new Model((string)($this->argument('model') ?? $this->ask('Model name')))));
+            $models->push($this->handleModel(new Model((string) ($this->argument('model') ?? $this->ask('Model name')))));
         } while ($this->confirm('Would you like to work on another model?', true));
 
         $success = app('migatorMigration')->create($models);
@@ -56,7 +56,7 @@ class CreateCommand extends Command
         $existMessage = $model->exists() ? 'Model already exists' : 'Model does not exist yet';
         $this->info($existMessage);
 
-        $this->info('Let\'s configure fields for ' . $model->tableName . '!');
+        $this->info('Let\'s configure fields for '.$model->tableName.'!');
 
         do {
             $name = $this->ask('Field name');
@@ -77,15 +77,15 @@ class CreateCommand extends Command
             }
         } while ($this->confirm('Would you like to add another field?', true));
 
-        $this->info('The following fields will be created for ' . $model->tableName . ':');
+        $this->info('The following fields will be created for '.$model->tableName.':');
         $this->table(
             ['name', 'type'],
             $model->fields->map(function (Field $field) {
-                return [$field->name, (string)$field->type];
+                return [$field->name, (string) $field->type];
             })
         );
 
-        if (!$this->confirm('Do you want to build the model [' . $model->tableName . ']?', true)) {
+        if (! $this->confirm('Do you want to build the model ['.$model->tableName.']?', true)) {
             $this->warn('Cancelled build');
         }
 
@@ -107,6 +107,6 @@ class CreateCommand extends Command
             new DateType(),
             new JsonType(),
             new UuidType(),
-        ])->mapWithKeys(fn(FieldTypeInterface $fieldType) => [(string)$fieldType => $fieldType]);
+        ])->mapWithKeys(fn (FieldTypeInterface $fieldType) => [(string) $fieldType => $fieldType]);
     }
 }
