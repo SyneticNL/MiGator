@@ -34,8 +34,16 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
 
     public function toMigrationString(string $column): string
     {
+        if ($this instanceof IdType && $column === 'id') {
+            $column = '';
+        }
+
+        if ($column) {
+            $column = '\''.$column.'\'';
+        }
+
         return Str::of($this->method)
-            ->append(sprintf('(\'%s\'', $column))
+            ->append('('.$column)
             ->when($this->getParameters()->isNotEmpty(), function (Stringable $string) {
                 return $string
                     ->append(', ')
