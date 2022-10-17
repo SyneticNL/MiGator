@@ -25,7 +25,7 @@ This package will ask the developer interactively for the following:
         - [x] json
         - [x] id
         - [x] integer
-    - [x] default value (#11)
+    - [ ] default value (#11)
     - [ ] index (#12)
     - [ ] foreign keys (#13)
 - [ ] relations to other entities (#9)
