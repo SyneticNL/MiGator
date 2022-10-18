@@ -8,20 +8,31 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Synetic\Migator\Domains\FieldTypeInterface;
+use Synetic\Migator\Domains\FieldTypeParameters\FieldTypeParameterInterface;
 
 abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
 {
-    protected string $label = '';
+    private string $label = '';
 
     protected string $method = '';
 
-    protected bool $hasDefaultValue = false;
+    private bool $hasDefaultValue = false;
 
-    protected mixed $defaultValue;
+    private mixed $defaultValue;
 
-    protected function getParameters(): Collection
+    protected Collection $parameters;
+
+    public function __construct()
     {
-        return new Collection();
+        $this->parameters = collect();
+    }
+
+    /**
+     * @return Collection<int, FieldTypeParameterInterface>
+     */
+    public function getParameters(): Collection
+    {
+        return $this->parameters;
     }
 
     public function setDefault(mixed $default): static
@@ -39,19 +50,19 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
         }
 
         if ($column) {
-            $column = '\''.$column.'\'';
+            $column = '\'' . $column . '\'';
         }
 
+        $parameters = $this->getParameters()
+            ->map(fn(FieldTypeParameterInterface $parameter) => $parameter->getValue())
+            ->filter();
+
         return Str::of($this->method)
-            ->append('('.$column)
-            ->when($this->getParameters()->isNotEmpty(), function (Stringable $string) {
+            ->append('(' . $column)
+            ->when($parameters->isNotEmpty(), function (Stringable $string) use ($parameters) {
                 return $string
                     ->append(', ')
-                    ->append(
-                        $this->getParameters()
-                            ->map(fn ($value, $key) => sprintf('$%s = %s', $key, $value ?? 'null'))
-                            ->join(', ')
-                    );
+                    ->append($parameters->join(', '));
             })
             ->append(')')
             ->when($this->hasDefaultValue, function (Stringable $string) {
@@ -72,7 +83,7 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
             $default = $default ? 'true' : 'false';
         }
 
-        return (string) ($default ?? 'null');
+        return (string)($default ?? 'null');
     }
 
     public function __toString(): string

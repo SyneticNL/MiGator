@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Synetic\Migator\Domains\FieldTypes;
 
-use Illuminate\Support\Collection;
+use Synetic\Migator\Domains\FieldTypeParameters\IntegerFieldTypeParameter;
 
 class DateTimeType extends AbstractFieldType
 {
@@ -12,13 +12,11 @@ class DateTimeType extends AbstractFieldType
 
     protected string $method = 'dateTime';
 
-    public function __construct(
-        private ?int $precision = 0
-    ) {
-    }
-
-    protected function getParameters(): Collection
+    public function __construct()
     {
-        return (new Collection())->put('precision', $this->precision);
+        parent::__construct();
+        $this->parameters = collect([
+            new IntegerFieldTypeParameter('precision', 0, true)
+        ]);
     }
 }
