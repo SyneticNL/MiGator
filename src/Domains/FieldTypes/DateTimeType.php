@@ -8,6 +8,8 @@ use Illuminate\Support\Collection;
 
 class DateTimeType extends AbstractFieldType
 {
+    protected string $label = 'date-time';
+
     protected string $method = 'dateTime';
 
     public function __construct(

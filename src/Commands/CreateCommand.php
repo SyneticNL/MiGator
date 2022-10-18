@@ -25,6 +25,14 @@ class CreateCommand extends Command
 
     protected $description = 'Create a migration.';
 
+    private Collection $fieldTypes;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->fieldTypes = $this->getFieldTypes();
+    }
+
     public function handle(): int
     {
         $models = new Collection();
@@ -59,14 +67,16 @@ class CreateCommand extends Command
                 continue;
             }
 
-            $fieldTypeName = $this->choice('Field types', $this->getFieldTypes()->keys()->toArray());
-            /** @var FieldTypeInterface $fieldType */
-            $fieldType = new ($this->getFieldTypes()->get($fieldTypeName))();
+            $choice = $this->choice('Field type', $this->fieldTypes->keys()->toArray());
 
-            $defaultValue = $this->ask('Default value');
-            $fieldType->setDefault($defaultValue);
-
-            $model->addField(new Field($name, $fieldType));
+            if (is_string($choice)) {
+                $fieldType = $this->fieldTypes->get($choice);
+                if ($fieldType !== null) {
+                    $defaultValue = $this->ask('Default value');
+                    $fieldType->setDefault($defaultValue);
+                    $model->addField(new Field($name, $fieldType));
+                }
+            }
         } while ($this->confirm('Would you like to add another field?', true));
 
         $this->info('The following fields will be created for '.$model->tableName.':');
@@ -75,7 +85,7 @@ class CreateCommand extends Command
             $model->fields->map(function (Field $field) {
                 return [
                     $field->name,
-                    class_basename($field->type),
+                    (string) $field->type,
                     $field->type->getDefault(),
                 ];
             })
@@ -89,21 +99,22 @@ class CreateCommand extends Command
     }
 
     /**
-     * @return Collection<string, string>
+     * @return Collection<string,FieldTypeInterface>
      */
     private function getFieldTypes(): Collection
     {
-        // TODO: Automatically discover all different field types
-        return new Collection([
-            'id' => IdType::class,
-            'string' => StringType::class,
-            'integer' => IntegerType::class,
-            'date-time' => DateTimeType::class,
-            'text' => TextType::class,
-            'boolean' => BooleanType::class,
-            'date' => DateType::class,
-            'json' => JsonType::class,
-            'uuid' => UuidType::class,
+        return collect([
+            new IdType(),
+            new StringType(),
+            new IntegerType(),
+            new DateTimeType(),
+            new TextType(),
+            new BooleanType(),
+            new DateType(),
+            new JsonType(),
+            new UuidType(),
+        ])->mapWithKeys(fn (FieldTypeInterface $fieldType) => [
+            (string) $fieldType => $fieldType,
         ]);
     }
 }

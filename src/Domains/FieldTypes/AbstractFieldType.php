@@ -9,8 +9,10 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Synetic\Migator\Domains\FieldTypeInterface;
 
-abstract class AbstractFieldType implements FieldTypeInterface
+abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
 {
+    protected string $label = '';
+
     protected string $method = '';
 
     private bool $hasDefaultValue = false;
@@ -37,8 +39,16 @@ abstract class AbstractFieldType implements FieldTypeInterface
 
     public function toMigrationString(string $column): string
     {
+        if ($this instanceof IdType && $column === 'id') {
+            $column = '';
+        }
+
+        if ($column) {
+            $column = '\''.$column.'\'';
+        }
+
         return Str::of($this->method)
-            ->append(sprintf('(\'%s\'', $column))
+            ->append('('.$column)
             ->when($this->getParameters()->isNotEmpty(), function (Stringable $string) {
                 return $string
                     ->append(', ')
@@ -68,5 +78,10 @@ abstract class AbstractFieldType implements FieldTypeInterface
         }
 
         return (string) ($default ?? 'null');
+    }
+
+    public function __toString(): string
+    {
+        return $this->label ?: $this->method;
     }
 }

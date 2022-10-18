@@ -15,8 +15,6 @@ class Model
      */
     public Collection $fields;
 
-    private bool $tableExists;
-
     private array $columns = [];
 
     public string $tableName;
@@ -25,7 +23,6 @@ class Model
         public string $model,
     ) {
         $this->tableName = Str::camel(Str::plural($model));
-        $this->tableExists = Schema::hasTable($this->tableName);
         $this->fields = new Collection();
     }
 
@@ -36,7 +33,7 @@ class Model
 
     public function exists(): bool
     {
-        return $this->tableExists;
+        return Schema::hasTable($this->tableName);
     }
 
     public function columnExists(string $columnName): bool

@@ -11,6 +11,8 @@ interface FieldTypeInterface
      */
     public function toMigrationString(string $column): string;
 
+    public function __toString(): string;
+
     public function setDefault(mixed $default): static;
 
     public function getDefault(): mixed;
