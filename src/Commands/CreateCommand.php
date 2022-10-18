@@ -11,6 +11,7 @@ use Synetic\Migator\Domains\FieldTypeInterface;
 use Synetic\Migator\Domains\FieldTypes\BooleanType;
 use Synetic\Migator\Domains\FieldTypes\DateTimeType;
 use Synetic\Migator\Domains\FieldTypes\DateType;
+use Synetic\Migator\Domains\FieldTypes\DecimalType;
 use Synetic\Migator\Domains\FieldTypes\IdType;
 use Synetic\Migator\Domains\FieldTypes\IntegerType;
 use Synetic\Migator\Domains\FieldTypes\JsonType;
@@ -101,6 +102,7 @@ class CreateCommand extends Command
             new IdType(),
             new StringType(),
             new IntegerType(),
+            new DecimalType(),
             new DateTimeType(),
             new TextType(),
             new BooleanType(),

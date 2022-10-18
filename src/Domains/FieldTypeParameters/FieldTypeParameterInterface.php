@@ -11,4 +11,6 @@ interface FieldTypeParameterInterface
     public function validate(int|string|array|null $value): bool;
 
     public function getValue(): int|string;
+
+    public function hasDefaultValue(): bool;
 }

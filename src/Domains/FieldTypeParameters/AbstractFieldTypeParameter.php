@@ -24,7 +24,7 @@ abstract class AbstractFieldTypeParameter implements FieldTypeParameterInterface
     {
         $isValid = ($this->nullable && $value === null) || $this->validate($value);
 
-        throw_if(! $isValid, new \UnexpectedValueException('Invalid parameter value for '.$this->label));
+        throw_if(!$isValid, new \UnexpectedValueException('Invalid parameter value for ' . $this->label));
 
         $this->hasValue = true;
         $this->value = $value;
@@ -34,14 +34,19 @@ abstract class AbstractFieldTypeParameter implements FieldTypeParameterInterface
     {
         $value = $this->hasValue ? $this->value : $this->default;
 
-        if ($value === $this->default) {
-            return '';
-        }
-
         if (is_string($value)) {
-            $value = '\''.$value.'\'';
+            $value = '\'' . $value . '\'';
         }
 
         return $value ?? 'null';
     }
+
+    public function hasDefaultValue(): bool
+    {
+        if (!$this->hasValue) {
+            return true;
+        }
+        return $this->value === $this->default;
+    }
+
 }

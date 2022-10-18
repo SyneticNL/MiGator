@@ -50,19 +50,17 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
         }
 
         if ($column) {
-            $column = '\''.$column.'\'';
+            $column = '\'' . $column . '\'';
         }
 
-        $parameters = $this->getParameters()
-            ->map(fn (FieldTypeParameterInterface $parameter) => $parameter->getValue())
-            ->filter();
+        $methodParameters = $this->getMethodParameters();
 
         return Str::of($this->method)
-            ->append('('.$column)
-            ->when($parameters->isNotEmpty(), function (Stringable $string) use ($parameters) {
+            ->append('(' . $column)
+            ->when($methodParameters->isNotEmpty(), function (Stringable $string) use ($methodParameters) {
                 return $string
                     ->append(', ')
-                    ->append($parameters->join(', '));
+                    ->append($methodParameters->join(', '));
             })
             ->append(')')
             ->when($this->hasDefaultValue, function (Stringable $string) {
@@ -83,11 +81,27 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
             $default = $default ? 'true' : 'false';
         }
 
-        return (string) ($default ?? 'null');
+        return (string)($default ?? 'null');
     }
 
     public function __toString(): string
     {
         return $this->label ?: $this->method;
+    }
+
+    private function getMethodParameters(): Collection
+    {
+        $omitDefault = true;
+        return $this->getParameters()
+            ->reverse()
+            ->filter(function (FieldTypeParameterInterface $parameter) use (&$omitDefault) {
+                if ($omitDefault && $parameter->hasDefaultValue()) {
+                    return false;
+                }
+                $omitDefault = false;
+                return true;
+            })
+            ->reverse()
+            ->map(fn(FieldTypeParameterInterface $parameter) => $parameter->getValue());
     }
 }

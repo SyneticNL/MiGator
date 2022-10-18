@@ -7,6 +7,7 @@ namespace Synetic\Migator\Tests\Feature\Domains;
 use Synetic\Migator\Domains\FieldTypeParameters\FieldTypeParameterInterface;
 use Synetic\Migator\Domains\FieldTypes\BooleanType;
 use Synetic\Migator\Domains\FieldTypes\DateTimeType;
+use Synetic\Migator\Domains\FieldTypes\DecimalType;
 use Synetic\Migator\Domains\FieldTypes\IntegerType;
 use Synetic\Migator\Domains\FieldTypes\TextType;
 use Synetic\Migator\Tests\TestCase;
@@ -53,5 +54,37 @@ class FieldTypeTest extends TestCase
 
         $type = (new BooleanType())->setDefault(true);
         $this->assertEquals('boolean(\'foo\')->default(true)', $type->toMigrationString('foo'));
+    }
+
+    public function test_multiple_parameters_are_possible(): void
+    {
+        $type = new DecimalType();
+        $type->getParameters()->first()->setValue(4);
+        $type->getParameters()->last()->setValue(5);
+
+        $this->assertEquals('decimal(\'foo\', 4, 5)', $type->toMigrationString('foo'));
+    }
+
+    public function test_multiple_parameters_with_default_value_can_be_omitted(): void
+    {
+        $type = new DecimalType();
+        $type->getParameters()->first()->setValue(8);
+        $type->getParameters()->last()->setValue(2);
+
+        $this->assertEquals('decimal(\'foo\')', $type->toMigrationString('foo'));
+
+        $type->getParameters()->first()->setValue(4);
+        $type->getParameters()->last()->setValue(2);
+
+        $this->assertEquals('decimal(\'foo\', 4)', $type->toMigrationString('foo'));
+    }
+
+    public function test_multiple_parameters_with_default_value_before_others_cannot_be_omitted(): void
+    {
+        $type = new DecimalType();
+        $type->getParameters()->first()->setValue(8);
+        $type->getParameters()->last()->setValue(4);
+
+        $this->assertEquals('decimal(\'foo\', 8, 4)', $type->toMigrationString('foo'));
     }
 }

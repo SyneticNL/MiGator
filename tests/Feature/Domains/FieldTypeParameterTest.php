@@ -10,6 +10,7 @@ use Synetic\Migator\Tests\TestCase;
 
 class FieldTypeParameterTest extends TestCase
 {
+
     public function integerDataProvider(): array
     {
         return [
@@ -24,7 +25,6 @@ class FieldTypeParameterTest extends TestCase
 
     /**
      * @dataProvider integerDataProvider
-     *
      * @throws \Throwable
      */
     public function test_integer_type_allows_only_integers(mixed $value, bool $expectException): void
@@ -45,10 +45,10 @@ class FieldTypeParameterTest extends TestCase
     public function test_it_returns_default_value_if_not_set(): void
     {
         $parameter = new IntegerFieldTypeParameter('foo', 0);
-        $this->assertEquals('', $parameter->getValue());
+        $this->assertEquals(0, $parameter->getValue());
 
         $parameter->setValue(0);
-        $this->assertEquals('', $parameter->getValue());
+        $this->assertEquals(0, $parameter->getValue());
 
         $parameter->setValue(10);
         $this->assertEquals('10', $parameter->getValue());
@@ -70,4 +70,25 @@ class FieldTypeParameterTest extends TestCase
         $parameter->setValue('foo');
         $this->assertEquals('\'foo\'', $parameter->getValue());
     }
+
+    /**
+     * @throws \Throwable
+     */
+    public function test_it_detects_default_values(): void
+    {
+        $parameter = new IntegerFieldTypeParameter('foo', 4);
+        $this->assertTrue($parameter->hasDefaultValue());
+
+        $parameter->setValue(4);
+        $this->assertTrue($parameter->hasDefaultValue());
+
+        $parameter = new IntegerFieldTypeParameter('foo', null, true);
+        $parameter->setValue(null);
+        $this->assertTrue($parameter->hasDefaultValue());
+
+        $parameter = new IntegerFieldTypeParameter('foo', 4);
+        $parameter->setValue(5);
+        $this->assertFalse($parameter->hasDefaultValue());
+    }
+
 }
