@@ -10,7 +10,6 @@ use Synetic\Migator\Tests\TestCase;
 
 class FieldTypeParameterTest extends TestCase
 {
-
     public function integerDataProvider(): array
     {
         return [
@@ -25,6 +24,7 @@ class FieldTypeParameterTest extends TestCase
 
     /**
      * @dataProvider integerDataProvider
+     *
      * @throws \Throwable
      */
     public function test_integer_type_allows_only_integers(mixed $value, bool $expectException): void
@@ -90,5 +90,4 @@ class FieldTypeParameterTest extends TestCase
         $parameter->setValue(5);
         $this->assertFalse($parameter->hasDefaultValue());
     }
-
 }
