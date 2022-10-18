@@ -16,7 +16,7 @@ class DateTimeType extends AbstractFieldType
     {
         parent::__construct();
         $this->parameters = collect([
-            new IntegerFieldTypeParameter('precision', 0, true)
+            new IntegerFieldTypeParameter('precision', 0, true),
         ]);
     }
 }

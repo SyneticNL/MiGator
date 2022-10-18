@@ -14,7 +14,7 @@ class StringType extends AbstractFieldType
     {
         parent::__construct();
         $this->parameters = collect([
-            new IntegerFieldTypeParameter('length', null, true)
+            new IntegerFieldTypeParameter('length', null, true),
         ]);
     }
 }

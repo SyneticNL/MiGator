@@ -50,15 +50,15 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
         }
 
         if ($column) {
-            $column = '\'' . $column . '\'';
+            $column = '\''.$column.'\'';
         }
 
         $parameters = $this->getParameters()
-            ->map(fn(FieldTypeParameterInterface $parameter) => $parameter->getValue())
+            ->map(fn (FieldTypeParameterInterface $parameter) => $parameter->getValue())
             ->filter();
 
         return Str::of($this->method)
-            ->append('(' . $column)
+            ->append('('.$column)
             ->when($parameters->isNotEmpty(), function (Stringable $string) use ($parameters) {
                 return $string
                     ->append(', ')
@@ -83,7 +83,7 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
             $default = $default ? 'true' : 'false';
         }
 
-        return (string)($default ?? 'null');
+        return (string) ($default ?? 'null');
     }
 
     public function __toString(): string
