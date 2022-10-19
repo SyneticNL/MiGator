@@ -40,9 +40,9 @@ abstract class AbstractFieldTypeParameter implements FieldTypeParameterInterface
 
         if (is_array($value)) {
             $values = collect($value)
-                ->map(fn($value) => $this->addQuotes((string)$value))
+                ->map(fn ($value) => $this->addQuotes((string) $value))
                 ->implode(', ');
-            $value = '[' . $values . ']';
+            $value = '['.$values.']';
         }
 
         return $value ?? 'null';
@@ -59,7 +59,6 @@ abstract class AbstractFieldTypeParameter implements FieldTypeParameterInterface
 
     private function addQuotes(string $value): string
     {
-        return '\'' . $value . '\'';
+        return '\''.$value.'\'';
     }
-
 }
