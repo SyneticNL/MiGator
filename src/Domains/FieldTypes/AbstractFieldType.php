@@ -24,7 +24,7 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
 
     public function __construct()
     {
-        $this->parameters = collect();
+        $this->parameters = collect([]);
     }
 
     /**

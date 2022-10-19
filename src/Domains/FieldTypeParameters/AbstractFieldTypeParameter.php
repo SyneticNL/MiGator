@@ -35,7 +35,14 @@ abstract class AbstractFieldTypeParameter implements FieldTypeParameterInterface
         $value = $this->hasValue ? $this->value : $this->default;
 
         if (is_string($value)) {
-            $value = '\''.$value.'\'';
+            $value = $this->addQuotes($value);
+        }
+
+        if (is_array($value)) {
+            $values = collect($value)
+                ->map(fn($value) => $this->addQuotes((string)$value))
+                ->implode(', ');
+            $value = '[' . $values . ']';
         }
 
         return $value ?? 'null';
@@ -49,4 +56,10 @@ abstract class AbstractFieldTypeParameter implements FieldTypeParameterInterface
 
         return $this->value === $this->default;
     }
+
+    private function addQuotes(string $value): string
+    {
+        return '\'' . $value . '\'';
+    }
+
 }

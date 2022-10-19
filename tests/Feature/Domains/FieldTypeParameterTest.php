@@ -6,6 +6,7 @@ namespace Synetic\Migator\Tests\Feature\Domains;
 
 use Synetic\Migator\Domains\FieldTypeParameters\IntegerFieldTypeParameter;
 use Synetic\Migator\Domains\FieldTypeParameters\StringFieldTypeParameter;
+use Synetic\Migator\Domains\FieldTypeParameters\StringsFieldTypeParameter;
 use Synetic\Migator\Tests\TestCase;
 
 class FieldTypeParameterTest extends TestCase
@@ -89,5 +90,15 @@ class FieldTypeParameterTest extends TestCase
         $parameter = new IntegerFieldTypeParameter('foo', 4);
         $parameter->setValue(5);
         $this->assertFalse($parameter->hasDefaultValue());
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function test_array_is_converted_to_string(): void
+    {
+        $parameter = new StringsFieldTypeParameter('foo', []);
+        $parameter->setValue(['bar', 'baz']);
+        $this->assertEquals('[\'bar\', \'baz\']', $parameter->getValue());
     }
 }
