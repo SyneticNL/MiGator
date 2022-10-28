@@ -73,6 +73,8 @@ class CreateCommand extends Command
             if (is_string($choice)) {
                 $fieldType = $this->fieldTypes->get($choice);
                 if ($fieldType !== null) {
+                    $defaultValue = $this->ask('Default value');
+                    $fieldType->setDefault($defaultValue);
                     $model->addField(new Field($name, $fieldType));
                 }
             }
@@ -80,9 +82,13 @@ class CreateCommand extends Command
 
         $this->info('The following fields will be created for '.$model->tableName.':');
         $this->table(
-            ['name', 'type'],
+            ['name', 'type', 'defaultValue'],
             $model->fields->map(function (Field $field) {
-                return [$field->name, (string) $field->type];
+                return [
+                    $field->name,
+                    (string) $field->type,
+                    $field->type->getDefault(),
+                ];
             })
         );
 
@@ -109,6 +115,8 @@ class CreateCommand extends Command
             new DateType(),
             new JsonType(),
             new UuidType(),
-        ])->mapWithKeys(fn (FieldTypeInterface $fieldType) => [(string) $fieldType => $fieldType]);
+        ])->mapWithKeys(fn (FieldTypeInterface $fieldType) => [
+            (string) $fieldType => $fieldType,
+        ]);
     }
 }

@@ -35,6 +35,11 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
         return $this->parameters;
     }
 
+    public function getDefault(): mixed
+    {
+        return $this->defaultValue;
+    }
+
     public function setDefault(mixed $default): static
     {
         $this->hasDefaultValue = true;
