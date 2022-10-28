@@ -8,20 +8,31 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
 use Synetic\Migator\Domains\FieldTypeInterface;
+use Synetic\Migator\Domains\FieldTypeParameters\FieldTypeParameterInterface;
 
 abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
 {
-    protected string $label = '';
+    private string $label = '';
 
     protected string $method = '';
 
-    protected bool $hasDefaultValue = false;
+    private bool $hasDefaultValue = false;
 
-    protected mixed $defaultValue;
+    private mixed $defaultValue;
 
-    protected function getParameters(): Collection
+    protected Collection $parameters;
+
+    public function __construct()
     {
-        return new Collection();
+        $this->parameters = collect([]);
+    }
+
+    /**
+     * @return Collection<int, FieldTypeParameterInterface>
+     */
+    public function getParameters(): Collection
+    {
+        return $this->parameters;
     }
 
     public function setDefault(mixed $default): static
@@ -42,16 +53,14 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
             $column = '\''.$column.'\'';
         }
 
+        $methodParameters = $this->getMethodParameters();
+
         return Str::of($this->method)
             ->append('('.$column)
-            ->when($this->getParameters()->isNotEmpty(), function (Stringable $string) {
+            ->when($methodParameters->isNotEmpty(), function (Stringable $string) use ($methodParameters) {
                 return $string
                     ->append(', ')
-                    ->append(
-                        $this->getParameters()
-                            ->map(fn ($value, $key) => sprintf('$%s = %s', $key, $value ?? 'null'))
-                            ->join(', ')
-                    );
+                    ->append($methodParameters->join(', '));
             })
             ->append(')')
             ->when($this->hasDefaultValue, function (Stringable $string) {
@@ -78,5 +87,23 @@ abstract class AbstractFieldType implements FieldTypeInterface, \Stringable
     public function __toString(): string
     {
         return $this->label ?: $this->method;
+    }
+
+    private function getMethodParameters(): Collection
+    {
+        $omitDefault = true;
+
+        return $this->getParameters()
+            ->reverse()
+            ->filter(function (FieldTypeParameterInterface $parameter) use (&$omitDefault) {
+                if ($omitDefault && $parameter->hasDefaultValue()) {
+                    return false;
+                }
+                $omitDefault = false;
+
+                return true;
+            })
+            ->reverse()
+            ->map(fn (FieldTypeParameterInterface $parameter) => $parameter->getValue());
     }
 }

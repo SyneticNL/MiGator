@@ -6,17 +6,16 @@ namespace Synetic\Migator\Domains\FieldTypes;
 
 use Synetic\Migator\Domains\FieldTypeParameters\IntegerFieldTypeParameter;
 
-class DateTimeType extends AbstractFieldType
+class DecimalType extends AbstractFieldType
 {
-    protected string $label = 'date-time';
-
-    protected string $method = 'dateTime';
+    protected string $method = 'decimal';
 
     public function __construct()
     {
         parent::__construct();
         $this->parameters = collect([
-            new IntegerFieldTypeParameter('precision', 0, true),
+            new IntegerFieldTypeParameter('precision', 8),
+            new IntegerFieldTypeParameter('scale', 2),
         ]);
     }
 }
